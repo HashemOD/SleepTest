@@ -1,198 +1,983 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
-  <head>
-    <script type="module">
-      import { createHotContext } from &#34;/@vite/client&#34;;
-const hot = createHotContext(&#34;/__dummy__runtime-error-plugin&#34;);
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>صحة الطالب — قياس جودة النوم (PSQI)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-function sendError(error) {
-  if (!(error instanceof Error)) {
-    error = new Error(&#34;(unknown runtime error)&#34;);
-  }
-  const serialized = {
-    message: error.message,
-    stack: error.stack,
-  };
-  hot.send(&#34;runtime-error-plugin:error&#34;, serialized);
-}
-
-// Only notify the parent frame after the server confirms the error passed
-// the filter and the overlay will be shown.
-hot.on(&#34;runtime-error-plugin:notify-parent&#34;, () =&gt; {
-  try {
-    window.parent.postMessage({ type: &#34;runtime-error&#34;, id: null }, &#34;*&#34;);
-  } catch (_) {}
-});
-
-window.addEventListener(&#34;error&#34;, (evt) =&gt; {
-  sendError(evt.error);
-});
-
-window.addEventListener(&#34;unhandledrejection&#34;, (evt) =&gt; {
-  sendError(evt.reason);
-});
-    </script>
-    <script type="module">
-      import { injectIntoGlobalHook } from &#34;/@react-refresh&#34;;
-injectIntoGlobalHook(window);
-window.$RefreshReg$ = () =&gt; {};
-window.$RefreshSig$ = () =&gt; (type) =&gt; type;
-    </script>
-    <script type="module" src="/@vite/client">
-    </script>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-    <title>
-      صحة الطالب: قياس جودة النوم
-    </title>
-    <meta name="description" content="أداة بحثية للطلاب للتقييم الذاتي لجودة النوم باستخدام مؤشر بيتسبرغ (PSQI)." />
-    <meta name="robots" content="index, follow" />
-    <meta property="og:title" content="صحة الطالب: قياس جودة النوم" />
-    <meta property="og:description" content="أداة بحثية للطلاب للتقييم الذاتي لجودة النوم باستخدام مؤشر بيتسبرغ (PSQI)." />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="صحة الطالب: قياس جودة النوم" />
-    <meta name="twitter:description" content="أداة بحثية للطلاب للتقييم الذاتي لجودة النوم باستخدام مؤشر بيتسبرغ (PSQI)." />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <script type="module">
-      &#34;use strict&#34;;(()=&gt;{var B=&#34;0.5.21&#34;;var y={HIGHLIGHT_COLOR:&#34;#0079F2&#34;,HIGHLIGHT_BG:&#34;#0079F210&#34;,ALLOWED_PARENT_DOMAINS:[&#34;.replit.dev&#34;,&#34;.replit.com&#34;,&#34;.replit-staging.com&#34;,&#34;.rp-humain.com&#34;,&#34;.repl.co&#34;],THEME_PREVIEW_STYLE_ID:&#34;replit-theme-preview&#34;,MAX_SIBLING_HIGHLIGHTERS:1e3,MAX_DESCENDANTS_FOR_SCREENSHOT:1500},oe=`
-  [contenteditable] {
-    outline: none !important;
+  :root {
+    --bg:        #0b1529;
+    --bg2:       #0f1e3a;
+    --card:      #152040;
+    --card2:     #1a2850;
+    --border:    rgba(99,120,200,0.2);
+    --primary:   #7c8ff5;
+    --primary2:  #5a6de0;
+    --text:      #e8ecff;
+    --muted:     #8a9cc5;
+    --emerald:   #34d399;
+    --rose:      #f87171;
+    --amber:     #fbbf24;
+    --radius:    16px;
   }
 
-  [contenteditable]:focus {
-    outline: none !important;
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Tajawal', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
   }
-`,se=`
-  .beacon-highlighter {
-    content: &#39;&#39;;
-    position: absolute;
-    z-index: ${Number.MAX_SAFE_INTEGER-3};
-    box-sizing: border-box;
+
+  /* ── Stars background ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 25% 55%, rgba(255,255,255,.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 40% 10%, rgba(255,255,255,.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 55% 75%, rgba(255,255,255,.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 70% 35%, rgba(255,255,255,.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 80% 15%, rgba(255,255,255,.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 90% 60%, rgba(255,255,255,.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 15% 85%, rgba(255,255,255,.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 60% 90%, rgba(255,255,255,.4) 0%, transparent 100%),
+      radial-gradient(2px 2px at 35% 40%, rgba(255,255,255,.2) 0%, transparent 100%),
+      radial-gradient(2px 2px at 75% 80%, rgba(255,255,255,.2) 0%, transparent 100%),
+      radial-gradient(2px 2px at 5%  50%, rgba(255,255,255,.2) 0%, transparent 100%);
     pointer-events: none;
-    outline: 2px dashed ${y.HIGHLIGHT_COLOR} !important;
-    outline-offset: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    transform: none !important;
-    background: ${y.HIGHLIGHT_BG} !important;
+    z-index: 0;
+  }
+
+  #app {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── Screens ── */
+  .screen { display: none; flex-direction: column; align-items: center; min-height: 100vh; padding: 24px 16px; }
+  .screen.active { display: flex; }
+
+  /* ── Welcome ── */
+  #welcome {
+    justify-content: center;
+    text-align: center;
+    gap: 32px;
+  }
+  .moon-wrap {
+    position: relative;
+    width: 140px; height: 140px;
+    margin: 0 auto;
+  }
+  .moon-glow {
+    position: absolute; inset: -20px;
+    background: radial-gradient(circle, rgba(124,143,245,.3) 0%, transparent 70%);
+    border-radius: 50%;
+    animation: pulse 3s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: .6; transform: scale(1); }
+    50%      { opacity: 1;  transform: scale(1.1); }
+  }
+  .moon-circle {
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    background: var(--card);
+    border: 2px solid rgba(124,143,245,.3);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .moon-circle svg { width: 72px; height: 72px; color: var(--primary); }
+  .star-dot {
+    position: absolute; border-radius: 50%;
+    background: white;
+  }
+  .welcome-title {
+    font-family: 'Cairo', sans-serif;
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    font-weight: 900;
+    letter-spacing: -1px;
+  }
+  .welcome-sub {
+    font-size: 1.15rem;
+    color: var(--primary);
+    font-weight: 600;
+  }
+  .welcome-desc {
+    font-size: 1rem;
+    color: var(--muted);
+    max-width: 560px;
+    margin: 0 auto;
+    line-height: 1.8;
+  }
+  .btn-start {
+    display: inline-block;
+    padding: 16px 48px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, var(--primary), var(--primary2));
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: transform .2s, box-shadow .2s;
+    box-shadow: 0 0 30px rgba(124,143,245,.4);
+    margin-top: 12px;
+  }
+  .btn-start:hover { transform: scale(1.05); box-shadow: 0 0 50px rgba(124,143,245,.6); }
+  .btn-start:active { transform: scale(.97); }
+
+  /* ── Progress bar ── */
+  #quiz { justify-content: flex-start; gap: 0; }
+  .progress-wrap {
+    width: 100%; max-width: 680px;
+    padding: 16px 0 24px;
+    flex-shrink: 0;
+  }
+  .progress-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: .85rem;
+    color: var(--muted);
+    margin-bottom: 8px;
+    font-family: 'Cairo', sans-serif;
+  }
+  .progress-track {
+    width: 100%;
+    height: 6px;
+    background: var(--card2);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary2), var(--primary));
+    border-radius: 3px;
+    transition: width .4s cubic-bezier(.4,0,.2,1);
+  }
+
+  /* ── Question Card ── */
+  .q-wrap {
+    width: 100%; max-width: 680px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 4px 0;
+  }
+  .q-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    box-shadow: 0 8px 40px rgba(0,0,0,.3);
+  }
+  .q-num {
+    font-size: .78rem;
+    font-weight: 700;
+    color: var(--primary);
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    font-family: 'Cairo', sans-serif;
+  }
+  .q-title {
+    font-family: 'Cairo', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--text);
+  }
+  .q-sub {
+    font-size: .97rem;
+    color: var(--muted);
+    margin-bottom: 20px;
+    line-height: 1.7;
+  }
+  .q-note {
+    font-size: .88rem;
+    color: var(--muted);
+    margin-top: -12px;
+    margin-bottom: 16px;
+    opacity: .8;
+  }
+
+  /* ── Radio Cards ── */
+  .radio-options { display: flex; flex-direction: column; gap: 10px; }
+  .radio-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    background: var(--card2);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: border-color .2s, background .2s, transform .15s;
+    user-select: none;
+  }
+  .radio-card:hover { border-color: rgba(124,143,245,.5); background: rgba(124,143,245,.08); }
+  .radio-card.selected {
+    border-color: var(--primary);
+    background: rgba(124,143,245,.15);
+    transform: scale(1.01);
+  }
+  .radio-dot {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    border: 2px solid var(--muted);
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: border-color .2s;
+  }
+  .radio-card.selected .radio-dot {
+    border-color: var(--primary);
+    background: var(--primary);
+  }
+  .radio-dot::after {
+    content: '';
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: white;
     opacity: 0;
+    transition: opacity .2s;
   }
-  
-  .beacon-hover-highlighter {
-    position: fixed;
-    z-index: ${Number.MAX_SAFE_INTEGER};
-  }
-  
-  .beacon-selected-highlighter {
-    position: fixed;
-    pointer-events: none;
-    outline: 2px solid ${y.HIGHLIGHT_COLOR} !important;
-    outline-offset: 3px !important;
-    background: none !important;
-  }
-  
-  .beacon-label {
-    position: absolute;
-    background-color: ${y.HIGHLIGHT_COLOR};
-    color: #FFFFFF;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 14px;
-    font-family: monospace;
-    line-height: 1;
-    white-space: nowrap;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    transform: translateY(-100%);
-    margin-top: -4px;
-    left: 0;
-    z-index: ${Number.MAX_SAFE_INTEGER-2};
-    pointer-events: none;
-    opacity: 0;
-  }
-  
-  .beacon-hover-label {
-    position: fixed;
-    z-index: ${Number.MAX_SAFE_INTEGER};
-  }
-  
-  .beacon-selected-label {
-    position: fixed;
-    pointer-events: none;
-  }
-  
-  .beacon-sibling-highlighter {
-    position: fixed;
-    pointer-events: none;
-    outline: 2px dashed ${y.HIGHLIGHT_COLOR} !important;
-    outline-offset: 0 !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    transform: none !important;
-    background: ${y.HIGHLIGHT_BG} !important;
-  }
-`;function je(n,t){return n[13]=1,n[14]=t&gt;&gt;8,n[15]=t&amp;255,n[16]=t&gt;&gt;8,n[17]=t&amp;255,n}var ge=112,me=72,fe=89,pe=115,$;function qe(){let n=new Int32Array(256);for(let t=0;t&lt;256;t++){let e=t;for(let i=0;i&lt;8;i++)e=e&amp;1?3988292384^e&gt;&gt;&gt;1:e&gt;&gt;&gt;1;n[t]=e}return n}function Qe(n){let t=-1;$||($=qe());for(let e=0;e&lt;n.length;e++)t=$[(t^n[e])&amp;255]^t&gt;&gt;&gt;8;return t^-1}function Ze(n){let t=n.length-1;for(let e=t;e&gt;=4;e--)if(n[e-4]===9&amp;&amp;n[e-3]===ge&amp;&amp;n[e-2]===me&amp;&amp;n[e-1]===fe&amp;&amp;n[e]===pe)return e-3;return 0}function Je(n,t,e=!1){let i=new Uint8Array(13);t*=39.3701,i[0]=ge,i[1]=me,i[2]=fe,i[3]=pe,i[4]=t&gt;&gt;&gt;24,i[5]=t&gt;&gt;&gt;16,i[6]=t&gt;&gt;&gt;8,i[7]=t&amp;255,i[8]=i[4],i[9]=i[5],i[10]=i[6],i[11]=i[7],i[12]=1;let r=Qe(i),o=new Uint8Array(4);if(o[0]=r&gt;&gt;&gt;24,o[1]=r&gt;&gt;&gt;16,o[2]=r&gt;&gt;&gt;8,o[3]=r&amp;255,e){let l=Ze(n);return n.set(i,l),n.set(o,l+13),n}else{let l=new Uint8Array(4);l[0]=0,l[1]=0,l[2]=0,l[3]=9;let s=new Uint8Array(54);return s.set(n,0),s.set(l,33),s.set(i,37),s.set(o,50),s}}var Ee=&#34;[modern-screenshot]&#34;,A=typeof window&lt;&#34;u&#34;,et=A&amp;&amp;&#34;Worker&#34;in window,tt=A&amp;&amp;&#34;atob&#34;in window,Fn=A&amp;&amp;&#34;btoa&#34;in window,Y=A?window.navigator?.userAgent:&#34;&#34;,be=Y.includes(&#34;Chrome&#34;),k=Y.includes(&#34;AppleWebKit&#34;)&amp;&amp;!be,X=Y.includes(&#34;Firefox&#34;),nt=n=&gt;n&amp;&amp;&#34;__CONTEXT__&#34;in n,it=n=&gt;n.constructor.name===&#34;CSSFontFaceRule&#34;,rt=n=&gt;n.constructor.name===&#34;CSSImportRule&#34;,v=n=&gt;n.nodeType===1,I=n=&gt;typeof n.className==&#34;object&#34;,ye=n=&gt;n.tagName===&#34;image&#34;,ot=n=&gt;n.tagName===&#34;use&#34;,L=n=&gt;v(n)&amp;&amp;typeof n.style&lt;&#34;u&#34;&amp;&amp;!I(n),st=n=&gt;n.nodeType===8,lt=n=&gt;n.nodeType===3,H=n=&gt;n.tagName===&#34;IMG&#34;,F=n=&gt;n.tagName===&#34;VIDEO&#34;,at=n=&gt;n.tagName===&#34;CANVAS&#34;,ct=n=&gt;n.tagName===&#34;TEXTAREA&#34;,ht=n=&gt;n.tagName===&#34;INPUT&#34;,dt=n=&gt;n.tagName===&#34;STYLE&#34;,ut=n=&gt;n.tagName===&#34;SCRIPT&#34;,gt=n=&gt;n.tagName===&#34;SELECT&#34;,mt=n=&gt;n.tagName===&#34;SLOT&#34;,ft=n=&gt;n.tagName===&#34;IFRAME&#34;,pt=(...n)=&gt;console.warn(Ee,...n);function Et(n){let t=n?.createElement?.(&#34;canvas&#34;);return t&amp;&amp;(t.height=t.width=1),!!t&amp;&amp;&#34;toDataURL&#34;in t&amp;&amp;!!t.toDataURL(&#34;image/webp&#34;).includes(&#34;image/webp&#34;)}var K=n=&gt;n.startsWith(&#34;data:&#34;);function we(n,t){if(n.match(/^[a-z]+:\/\//i))return n;if(A&amp;&amp;n.match(/^\/\//))return window.location.protocol+n;if(n.match(/^[a-z]+:/i)||!A)return n;let e=U().implementation.createHTMLDocument(),i=e.createElement(&#34;base&#34;),r=e.createElement(&#34;a&#34;);return e.head.appendChild(i),e.body.appendChild(r),t&amp;&amp;(i.href=t),r.href=n,r.href}function U(n){return(n&amp;&amp;v(n)?n?.ownerDocument:n)??window.document}var V=&#34;http://www.w3.org/2000/svg&#34;;function bt(n,t,e){let i=U(e).createElementNS(V,&#34;svg&#34;);return i.setAttributeNS(null,&#34;width&#34;,n.toString()),i.setAttributeNS(null,&#34;height&#34;,t.toString()),i.setAttributeNS(null,&#34;viewBox&#34;,`0 0 ${n} ${t}`),i}function yt(n,t){let e=new XMLSerializer().serializeToString(n);return t&amp;&amp;(e=e.replace(/[\u0000-\u0008\v\f\u000E-\u001F\uD800-\uDFFF\uFFFE\uFFFF]/gu,&#34;&#34;)),`data:image/svg+xml;charset=utf-8,${encodeURIComponent(e)}`}async function wt(n,t=&#34;image/png&#34;,e=1){try{return await new Promise((i,r)=&gt;{n.toBlob(o=&gt;{o?i(o):r(new Error(&#34;Blob is null&#34;))},t,e)})}catch(i){if(tt)return St(n.toDataURL(t,e));throw i}}function St(n){let[t,e]=n.split(&#34;,&#34;),i=t.match(/data:(.+);/)?.[1]??void 0,r=window.atob(e),o=r.length,l=new Uint8Array(o);for(let s=0;s&lt;o;s+=1)l[s]=r.charCodeAt(s);return new Blob([l],{type:i})}function Se(n,t){return new Promise((e,i)=&gt;{let r=new FileReader;r.onload=()=&gt;e(r.result),r.onerror=()=&gt;i(r.error),r.onabort=()=&gt;i(new Error(`Failed read blob to ${t}`)),t===&#34;dataUrl&#34;?r.readAsDataURL(n):t===&#34;arrayBuffer&#34;&amp;&amp;r.readAsArrayBuffer(n)})}var vt=n=&gt;Se(n,&#34;dataUrl&#34;),Tt=n=&gt;Se(n,&#34;arrayBuffer&#34;);function R(n,t){let e=U(t).createElement(&#34;img&#34;);return e.decoding=&#34;sync&#34;,e.loading=&#34;eager&#34;,e.src=n,e}function M(n,t){return new Promise(e=&gt;{let{timeout:i,ownerDocument:r,onError:o,onWarn:l}=t??{},s=typeof n==&#34;string&#34;?R(n,U(r)):n,c=null,h=null;function a(){e(s),c&amp;&amp;clearTimeout(c),h?.()}if(i&amp;&amp;(c=setTimeout(a,i)),F(s)){let d=s.currentSrc||s.src;if(!d)return s.poster?M(s.poster,t).then(e):a();if(s.readyState&gt;=2)return a();let u=a,m=g=&gt;{l?.(&#34;Failed video load&#34;,d,g),o?.(g),a()};h=()=&gt;{s.removeEventListener(&#34;loadeddata&#34;,u),s.removeEventListener(&#34;error&#34;,m)},s.addEventListener(&#34;loadeddata&#34;,u,{once:!0}),s.addEventListener(&#34;error&#34;,m,{once:!0})}else{let d=ye(s)?s.href.baseVal:s.currentSrc||s.src;if(!d)return a();let u=async()=&gt;{if(H(s)&amp;&amp;&#34;decode&#34;in s)try{await s.decode()}catch(g){l?.(&#34;Failed to decode image, trying to render anyway&#34;,s.dataset.originalSrc||d,g)}a()},m=g=&gt;{l?.(&#34;Failed image load&#34;,s.dataset.originalSrc||d,g),a()};if(H(s)&amp;&amp;s.complete)return u();h=()=&gt;{s.removeEventListener(&#34;load&#34;,u),s.removeEventListener(&#34;error&#34;,m)},s.addEventListener(&#34;load&#34;,u,{once:!0}),s.addEventListener(&#34;error&#34;,m,{once:!0})}})}async function Ct(n,t){L(n)&amp;&amp;(H(n)||F(n)?await M(n,t):await Promise.all([&#34;img&#34;,&#34;video&#34;].flatMap(e=&gt;Array.from(n.querySelectorAll(e)).map(i=&gt;M(i,t)))))}var ve=function(){let t=0,e=()=&gt;`0000${(Math.random()*36**4&lt;&lt;0).toString(36)}`.slice(-4);return()=&gt;(t+=1,`u${e()}${t}`)}();function Te(n){return n?.split(&#34;,&#34;).map(t=&gt;t.trim().replace(/&#34;|&#39;/g,&#34;&#34;).toLowerCase()).filter(Boolean)}var le=0;function At(n){let t=`${Ee}[#${le}]`;return le++,{time:e=&gt;n&amp;&amp;console.time(`${t} ${e}`),timeEnd:e=&gt;n&amp;&amp;console.timeEnd(`${t} ${e}`),warn:(...e)=&gt;n&amp;&amp;pt(...e)}}function Rt(n){return{cache:n?&#34;no-cache&#34;:&#34;force-cache&#34;}}async function z(n,t){return nt(n)?n:Ht(n,{...t,autoDestruct:!0})}async function Ht(n,t){let{scale:e=1,workerUrl:i,workerNumber:r=1}=t||{},o=!!t?.debug,l=t?.features??!0,s=n.ownerDocument??(A?window.document:void 0),c=n.ownerDocument?.defaultView??(A?window:void 0),h=new Map,a={width:0,height:0,quality:1,type:&#34;image/png&#34;,scale:e,backgroundColor:null,style:null,filter:null,maximumCanvasSize:0,timeout:3e4,progress:null,debug:o,fetch:{requestInit:Rt(t?.fetch?.bypassingCache),placeholderImage:&#34;data:image/png;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7&#34;,bypassingCache:!1,...t?.fetch},fetchFn:null,font:{},drawImageInterval:100,workerUrl:null,workerNumber:r,onCloneNode:null,onEmbedNode:null,onCreateForeignObjectSvg:null,includeStyleProperties:null,autoDestruct:!1,...t,__CONTEXT__:!0,log:At(o),node:n,ownerDocument:s,ownerWindow:c,dpi:e===1?null:96*e,svgStyleElement:Ce(s),svgDefsElement:s?.createElementNS(V,&#34;defs&#34;),svgStyles:new Map,defaultComputedStyles:new Map,workers:[...Array.from({length:et&amp;&amp;i&amp;&amp;r?r:0})].map(()=&gt;{try{let m=new Worker(i);return m.onmessage=async g=&gt;{let{url:f,result:E}=g.data;E?h.get(f)?.resolve?.(E):h.get(f)?.reject?.(new Error(`Error receiving message from worker: ${f}`))},m.onmessageerror=g=&gt;{let{url:f}=g.data;h.get(f)?.reject?.(new Error(`Error receiving message from worker: ${f}`))},m}catch(m){return a.log.warn(&#34;Failed to new Worker&#34;,m),null}}).filter(Boolean),fontFamilies:new Map,fontCssTexts:new Map,acceptOfImage:`${[Et(s)&amp;&amp;&#34;image/webp&#34;,&#34;image/svg+xml&#34;,&#34;image/*&#34;,&#34;*/*&#34;].filter(Boolean).join(&#34;,&#34;)};q=0.8`,requests:h,drawImageCount:0,tasks:[],features:l,isEnable:m=&gt;m===&#34;restoreScrollPosition&#34;?typeof l==&#34;boolean&#34;?!1:l[m]??!1:typeof l==&#34;boolean&#34;?l:l[m]??!0};a.log.time(&#34;wait until load&#34;),await Ct(n,{timeout:a.timeout,onWarn:a.log.warn}),a.log.timeEnd(&#34;wait until load&#34;);let{width:d,height:u}=xt(n,a);return a.width=d,a.height=u,a}function Ce(n){if(!n)return;let t=n.createElement(&#34;style&#34;),e=t.ownerDocument.createTextNode(`
-.______background-clip--text {
-  background-clip: text;
-  -webkit-background-clip: text;
-}
-`);return t.appendChild(e),t}function xt(n,t){let{width:e,height:i}=t;if(v(n)&amp;&amp;(!e||!i)){let r=n.getBoundingClientRect();e=e||r.width||Number(n.getAttribute(&#34;width&#34;))||0,i=i||r.height||Number(n.getAttribute(&#34;height&#34;))||0}return{width:e,height:i}}async function Lt(n,t){let{log:e,timeout:i,drawImageCount:r,drawImageInterval:o}=t;e.time(&#34;image to canvas&#34;);let l=await M(n,{timeout:i,onWarn:t.log.warn}),{canvas:s,context2d:c}=Mt(n.ownerDocument,t),h=()=&gt;{try{c?.drawImage(l,0,0,s.width,s.height)}catch(a){t.log.warn(&#34;Failed to drawImage&#34;,a)}};if(h(),t.isEnable(&#34;fixSvgXmlDecode&#34;))for(let a=0;a&lt;r;a++)await new Promise(d=&gt;{setTimeout(()=&gt;{h(),d()},a+o)});return t.drawImageCount=0,e.timeEnd(&#34;image to canvas&#34;),s}function Mt(n,t){let{width:e,height:i,scale:r,backgroundColor:o,maximumCanvasSize:l}=t,s=n.createElement(&#34;canvas&#34;);s.width=Math.floor(e*r),s.height=Math.floor(i*r),s.style.width=`${e}px`,s.style.height=`${i}px`,l&amp;&amp;(s.width&gt;l||s.height&gt;l)&amp;&amp;(s.width&gt;l&amp;&amp;s.height&gt;l?s.width&gt;s.height?(s.height*=l/s.width,s.width=l):(s.width*=l/s.height,s.height=l):s.width&gt;l?(s.height*=l/s.width,s.width=l):(s.width*=l/s.height,s.height=l));let c=s.getContext(&#34;2d&#34;);return c&amp;&amp;o&amp;&amp;(c.fillStyle=o,c.fillRect(0,0,s.width,s.height)),{canvas:s,context2d:c}}function Ae(n,t){if(n.ownerDocument)try{let o=n.toDataURL();if(o!==&#34;data:,&#34;)return R(o,n.ownerDocument)}catch(o){t.log.warn(&#34;Failed to clone canvas&#34;,o)}let e=n.cloneNode(!1),i=n.getContext(&#34;2d&#34;),r=e.getContext(&#34;2d&#34;);try{return i&amp;&amp;r&amp;&amp;r.putImageData(i.getImageData(0,0,n.width,n.height),0,0),e}catch(o){t.log.warn(&#34;Failed to clone canvas&#34;,o)}return e}function _t(n,t){try{if(n?.contentDocument?.body)return j(n.contentDocument.body,t)}catch(e){t.log.warn(&#34;Failed to clone iframe&#34;,e)}return n.cloneNode(!1)}function It(n){let t=n.cloneNode(!1);return n.currentSrc&amp;&amp;n.currentSrc!==n.src&amp;&amp;(t.src=n.currentSrc,t.srcset=&#34;&#34;),t.loading===&#34;lazy&#34;&amp;&amp;(t.loading=&#34;eager&#34;),t}async function Pt(n,t){if(n.ownerDocument&amp;&amp;!n.currentSrc&amp;&amp;n.poster)return R(n.poster,n.ownerDocument);let e=n.cloneNode(!1);e.crossOrigin=&#34;anonymous&#34;,n.currentSrc&amp;&amp;n.currentSrc!==n.src&amp;&amp;(e.src=n.currentSrc);let i=e.ownerDocument;if(i){let r=!0;if(await M(e,{onError:()=&gt;r=!1,onWarn:t.log.warn}),!r)return n.poster?R(n.poster,n.ownerDocument):e;e.currentTime=n.currentTime,await new Promise(l=&gt;{e.addEventListener(&#34;seeked&#34;,l,{once:!0})});let o=i.createElement(&#34;canvas&#34;);o.width=n.offsetWidth,o.height=n.offsetHeight;try{let l=o.getContext(&#34;2d&#34;);l&amp;&amp;l.drawImage(e,0,0,o.width,o.height)}catch(l){return t.log.warn(&#34;Failed to clone video&#34;,l),n.poster?R(n.poster,n.ownerDocument):e}return Ae(o,t)}return e}function Dt(n,t){return at(n)?Ae(n,t):ft(n)?_t(n,t):H(n)?It(n):F(n)?Pt(n,t):n.cloneNode(!1)}function Nt(n){let t=n.sandbox;if(!t){let{ownerDocument:e}=n;try{e&amp;&amp;(t=e.createElement(&#34;iframe&#34;),t.id=`__SANDBOX__-${ve()}`,t.width=&#34;0&#34;,t.height=&#34;0&#34;,t.style.visibility=&#34;hidden&#34;,t.style.position=&#34;fixed&#34;,e.body.appendChild(t),t.contentWindow?.document.write(&#39;&lt;!DOCTYPE html&gt;&lt;meta charset=&#34;UTF-8&#34;&gt;&lt;title&gt;&lt;/title&gt;&lt;body&gt;&#39;),n.sandbox=t)}catch(i){n.log.warn(&#34;Failed to getSandBox&#34;,i)}}return t}var Ot=[&#34;width&#34;,&#34;height&#34;,&#34;-webkit-text-fill-color&#34;],Bt=[&#34;stroke&#34;,&#34;fill&#34;];function Re(n,t,e){let{defaultComputedStyles:i}=e,r=n.nodeName.toLowerCase(),o=I(n)&amp;&amp;r!==&#34;svg&#34;,l=o?Bt.map(f=&gt;[f,n.getAttribute(f)]).filter(([,f])=&gt;f!==null):[],s=[o&amp;&amp;&#34;svg&#34;,r,l.map((f,E)=&gt;`${f}=${E}`).join(&#34;,&#34;),t].filter(Boolean).join(&#34;:&#34;);if(i.has(s))return i.get(s);let h=Nt(e)?.contentWindow;if(!h)return new Map;let a=h?.document,d,u;o?(d=a.createElementNS(V,&#34;svg&#34;),u=d.ownerDocument.createElementNS(d.namespaceURI,r),l.forEach(([f,E])=&gt;{u.setAttributeNS(null,f,E)}),d.appendChild(u)):d=u=a.createElement(r),u.textContent=&#34; &#34;,a.body.appendChild(d);let m=h.getComputedStyle(u,t),g=new Map;for(let f=m.length,E=0;E&lt;f;E++){let p=m.item(E);Ot.includes(p)||g.set(p,m.getPropertyValue(p))}return a.body.removeChild(d),i.set(s,g),g}function He(n,t,e){let i=new Map,r=[],o=new Map;if(e)for(let s of e)l(s);else for(let s=n.length,c=0;c&lt;s;c++){let h=n.item(c);l(h)}for(let s=r.length,c=0;c&lt;s;c++)o.get(r[c])?.forEach((h,a)=&gt;i.set(a,h));function l(s){let c=n.getPropertyValue(s),h=n.getPropertyPriority(s),a=s.lastIndexOf(&#34;-&#34;),d=a&gt;-1?s.substring(0,a):void 0;if(d){let u=o.get(d);u||(u=new Map,o.set(d,u)),u.set(s,[c,h])}t.get(s)===c&amp;&amp;!h||(d?r.push(d):i.set(s,[c,h]))}return i}function kt(n,t,e,i){let{ownerWindow:r,includeStyleProperties:o,currentParentNodeStyle:l}=i,s=t.style,c=r.getComputedStyle(n),h=Re(n,null,i);l?.forEach((d,u)=&gt;{h.delete(u)});let a=He(c,h,o);a.delete(&#34;transition-property&#34;),a.delete(&#34;all&#34;),a.delete(&#34;d&#34;),a.delete(&#34;content&#34;),e&amp;&amp;(a.delete(&#34;margin-top&#34;),a.delete(&#34;margin-right&#34;),a.delete(&#34;margin-bottom&#34;),a.delete(&#34;margin-left&#34;),a.delete(&#34;margin-block-start&#34;),a.delete(&#34;margin-block-end&#34;),a.delete(&#34;margin-inline-start&#34;),a.delete(&#34;margin-inline-end&#34;),a.set(&#34;box-sizing&#34;,[&#34;border-box&#34;,&#34;&#34;])),a.get(&#34;background-clip&#34;)?.[0]===&#34;text&#34;&amp;&amp;t.classList.add(&#34;______background-clip--text&#34;),be&amp;&amp;(a.has(&#34;font-kerning&#34;)||a.set(&#34;font-kerning&#34;,[&#34;normal&#34;,&#34;&#34;]),(a.get(&#34;overflow-x&#34;)?.[0]===&#34;hidden&#34;||a.get(&#34;overflow-y&#34;)?.[0]===&#34;hidden&#34;)&amp;&amp;a.get(&#34;text-overflow&#34;)?.[0]===&#34;ellipsis&#34;&amp;&amp;n.scrollWidth===n.clientWidth&amp;&amp;a.set(&#34;text-overflow&#34;,[&#34;clip&#34;,&#34;&#34;]));for(let d=s.length,u=0;u&lt;d;u++)s.removeProperty(s.item(u));return a.forEach(([d,u],m)=&gt;{s.setProperty(m,d,u)}),a}function Ft(n,t){(ct(n)||ht(n)||gt(n))&amp;&amp;t.setAttribute(&#34;value&#34;,n.value)}var Ut=[&#34;:before&#34;,&#34;:after&#34;],Vt=[&#34;:-webkit-scrollbar&#34;,&#34;:-webkit-scrollbar-button&#34;,&#34;:-webkit-scrollbar-thumb&#34;,&#34;:-webkit-scrollbar-track&#34;,&#34;:-webkit-scrollbar-track-piece&#34;,&#34;:-webkit-scrollbar-corner&#34;,&#34;:-webkit-resizer&#34;];function Gt(n,t,e,i,r){let{ownerWindow:o,svgStyleElement:l,svgStyles:s,currentNodeStyle:c}=i;if(!l||!o)return;function h(a){let d=o.getComputedStyle(n,a),u=d.getPropertyValue(&#34;content&#34;);if(!u||u===&#34;none&#34;)return;r?.(u),u=u.replace(/(&#39;)|(&#34;)|(counter\(.+\))/g,&#34;&#34;);let m=[ve()],g=Re(n,a,i);c?.forEach((b,S)=&gt;{g.delete(S)});let f=He(d,g,i.includeStyleProperties);f.delete(&#34;content&#34;),f.delete(&#34;-webkit-locale&#34;),f.get(&#34;background-clip&#34;)?.[0]===&#34;text&#34;&amp;&amp;t.classList.add(&#34;______background-clip--text&#34;);let E=[`content: &#39;${u}&#39;;`];if(f.forEach(([b,S],C)=&gt;{E.push(`${C}: ${b}${S?&#34; !important&#34;:&#34;&#34;};`)}),E.length===1)return;try{t.className=[t.className,...m].join(&#34; &#34;)}catch(b){i.log.warn(&#34;Failed to copyPseudoClass&#34;,b);return}let p=E.join(`
-  `),w=s.get(p);w||(w=[],s.set(p,w)),w.push(`.${m[0]}:${a}`)}Ut.forEach(h),e&amp;&amp;Vt.forEach(h)}var ae=new Set([&#34;symbol&#34;]);async function ce(n,t,e,i,r){if(v(e)&amp;&amp;(dt(e)||ut(e))||i.filter&amp;&amp;!i.filter(e))return;ae.has(t.nodeName)||ae.has(e.nodeName)?i.currentParentNodeStyle=void 0:i.currentParentNodeStyle=i.currentNodeStyle;let o=await j(e,i,!1,r);i.isEnable(&#34;restoreScrollPosition&#34;)&amp;&amp;Wt(n,o),t.appendChild(o)}async function he(n,t,e,i){let r=(v(n)?n.shadowRoot?.firstChild:void 0)??n.firstChild;for(let o=r;o;o=o.nextSibling)if(!st(o))if(v(o)&amp;&amp;mt(o)&amp;&amp;typeof o.assignedNodes==&#34;function&#34;){let l=o.assignedNodes();for(let s=0;s&lt;l.length;s++)await ce(n,t,l[s],e,i)}else await ce(n,t,o,e,i)}function Wt(n,t){if(!L(n)||!L(t))return;let{scrollTop:e,scrollLeft:i}=n;if(!e&amp;&amp;!i)return;let{transform:r}=t.style,o=new DOMMatrix(r),{a:l,b:s,c,d:h}=o;o.a=1,o.b=0,o.c=0,o.d=1,o.translateSelf(-i,-e),o.a=l,o.b=s,o.c=c,o.d=h,t.style.transform=o.toString()}function $t(n,t){let{backgroundColor:e,width:i,height:r,style:o}=t,l=n.style;if(e&amp;&amp;l.setProperty(&#34;background-color&#34;,e,&#34;important&#34;),i&amp;&amp;l.setProperty(&#34;width&#34;,`${i}px`,&#34;important&#34;),r&amp;&amp;l.setProperty(&#34;height&#34;,`${r}px`,&#34;important&#34;),o)for(let s in o)l[s]=o[s]}var Kt=/^[\w-:]+$/;async function j(n,t,e=!1,i){let{ownerDocument:r,ownerWindow:o,fontFamilies:l}=t;if(r&amp;&amp;lt(n))return i&amp;&amp;/\S/.test(n.data)&amp;&amp;i(n.data),r.createTextNode(n.data);if(r&amp;&amp;o&amp;&amp;v(n)&amp;&amp;(L(n)||I(n))){let c=await Dt(n,t);if(t.isEnable(&#34;removeAbnormalAttributes&#34;)){let g=c.getAttributeNames();for(let f=g.length,E=0;E&lt;f;E++){let p=g[E];Kt.test(p)||c.removeAttribute(p)}}let h=t.currentNodeStyle=kt(n,c,e,t);e&amp;&amp;$t(c,t);let a=!1;if(t.isEnable(&#34;copyScrollbar&#34;)){let g=[h.get(&#34;overflow-x&#34;)?.[0],h.get(&#34;overflow-y&#34;)?.[0]];a=g.includes(&#34;scroll&#34;)||(g.includes(&#34;auto&#34;)||g.includes(&#34;overlay&#34;))&amp;&amp;(n.scrollHeight&gt;n.clientHeight||n.scrollWidth&gt;n.clientWidth)}let d=h.get(&#34;text-transform&#34;)?.[0],u=Te(h.get(&#34;font-family&#34;)?.[0]),m=u?g=&gt;{d===&#34;uppercase&#34;?g=g.toUpperCase():d===&#34;lowercase&#34;?g=g.toLowerCase():d===&#34;capitalize&#34;&amp;&amp;(g=g[0].toUpperCase()+g.substring(1)),u.forEach(f=&gt;{let E=l.get(f);E||l.set(f,E=new Set),g.split(&#34;&#34;).forEach(p=&gt;E.add(p))})}:void 0;return Gt(n,c,a,t,m),Ft(n,c),F(n)||await he(n,c,t,m),c}let s=n.cloneNode(!1);return await he(n,s,t),s}function Yt(n){if(n.ownerDocument=void 0,n.ownerWindow=void 0,n.svgStyleElement=void 0,n.svgDefsElement=void 0,n.svgStyles.clear(),n.defaultComputedStyles.clear(),n.sandbox){try{n.sandbox.remove()}catch(t){n.log.warn(&#34;Failed to destroyContext&#34;,t)}n.sandbox=void 0}n.workers=[],n.fontFamilies.clear(),n.fontCssTexts.clear(),n.requests.clear(),n.tasks=[]}function Xt(n){let{url:t,timeout:e,responseType:i,...r}=n,o=new AbortController,l=e?setTimeout(()=&gt;o.abort(),e):void 0;return fetch(t,{signal:o.signal,...r}).then(s=&gt;{if(!s.ok)throw new Error(&#34;Failed fetch, not 2xx response&#34;,{cause:s});switch(i){case&#34;arrayBuffer&#34;:return s.arrayBuffer();case&#34;dataUrl&#34;:return s.blob().then(vt);case&#34;text&#34;:default:return s.text()}}).finally(()=&gt;clearTimeout(l))}function _(n,t){let{url:e,requestType:i=&#34;text&#34;,responseType:r=&#34;text&#34;,imageDom:o}=t,l=e,{timeout:s,acceptOfImage:c,requests:h,fetchFn:a,fetch:{requestInit:d,bypassingCache:u,placeholderImage:m},font:g,workers:f,fontFamilies:E}=n;i===&#34;image&#34;&amp;&amp;(k||X)&amp;&amp;n.drawImageCount++;let p=h.get(e);if(!p){u&amp;&amp;u instanceof RegExp&amp;&amp;u.test(l)&amp;&amp;(l+=(/\?/.test(l)?&#34;&amp;&#34;:&#34;?&#34;)+new Date().getTime());let w=i.startsWith(&#34;font&#34;)&amp;&amp;g&amp;&amp;g.minify,b=new Set;w&amp;&amp;i.split(&#34;;&#34;)[1].split(&#34;,&#34;).forEach(O=&gt;{E.has(O)&amp;&amp;E.get(O).forEach(re=&gt;b.add(re))});let S=w&amp;&amp;b.size,C={url:l,timeout:s,responseType:S?&#34;arrayBuffer&#34;:r,headers:i===&#34;image&#34;?{accept:c}:void 0,...d};p={type:i,resolve:void 0,reject:void 0,response:null},p.response=(async()=&gt;{if(a&amp;&amp;i===&#34;image&#34;){let T=await a(e);if(T)return T}return!k&amp;&amp;e.startsWith(&#34;http&#34;)&amp;&amp;f.length?new Promise((T,O)=&gt;{f[h.size&amp;f.length-1].postMessage({rawUrl:e,...C}),p.resolve=T,p.reject=O}):Xt(C)})().catch(T=&gt;{if(h.delete(e),i===&#34;image&#34;&amp;&amp;m)return n.log.warn(&#34;Failed to fetch image base64, trying to use placeholder image&#34;,l),typeof m==&#34;string&#34;?m:m(o);throw T}),h.set(e,p)}return p.response}async function xe(n,t,e,i){if(!Le(n))return n;for(let[r,o]of zt(n,t))try{let l=await _(e,{url:o,requestType:i?&#34;image&#34;:&#34;text&#34;,responseType:&#34;dataUrl&#34;});n=n.replace(jt(r),`$1${l}$3`)}catch(l){e.log.warn(&#34;Failed to fetch css data url&#34;,r,l)}return n}function Le(n){return/url\(([&#39;&#34;]?)([^&#39;&#34;]+?)\1\)/.test(n)}var Me=/url\(([&#39;&#34;]?)([^&#39;&#34;]+?)\1\)/g;function zt(n,t){let e=[];return n.replace(Me,(i,r,o)=&gt;(e.push([o,we(o,t)]),i)),e.filter(([i])=&gt;!K(i))}function jt(n){let t=n.replace(/([.*+?^${}()|\[\]\/\\])/g,&#34;\\$1&#34;);return new RegExp(`(url\\([&#39;&#34;]?)(${t})([&#39;&#34;]?\\))`,&#34;g&#34;)}var qt=[&#34;background-image&#34;,&#34;border-image-source&#34;,&#34;-webkit-border-image&#34;,&#34;-webkit-mask-image&#34;,&#34;list-style-image&#34;];function Qt(n,t){return qt.map(e=&gt;{let i=n.getPropertyValue(e);return!i||i===&#34;none&#34;?null:((k||X)&amp;&amp;t.drawImageCount++,xe(i,null,t,!0).then(r=&gt;{!r||i===r||n.setProperty(e,r,n.getPropertyPriority(e))}))}).filter(Boolean)}function Zt(n,t){if(H(n)){let e=n.currentSrc||n.src;if(!K(e))return[_(t,{url:e,imageDom:n,requestType:&#34;image&#34;,responseType:&#34;dataUrl&#34;}).then(i=&gt;{i&amp;&amp;(n.srcset=&#34;&#34;,n.dataset.originalSrc=e,n.src=i||&#34;&#34;)})];(k||X)&amp;&amp;t.drawImageCount++}else if(I(n)&amp;&amp;!K(n.href.baseVal)){let e=n.href.baseVal;return[_(t,{url:e,imageDom:n,requestType:&#34;image&#34;,responseType:&#34;dataUrl&#34;}).then(i=&gt;{i&amp;&amp;(n.dataset.originalSrc=e,n.href.baseVal=i||&#34;&#34;)})]}return[]}function Jt(n,t){let{ownerDocument:e,svgDefsElement:i}=t,r=n.getAttribute(&#34;href&#34;)??n.getAttribute(&#34;xlink:href&#34;);if(!r)return[];let[o,l]=r.split(&#34;#&#34;);if(l){let s=`#${l}`,c=e?.querySelector(`svg ${s}`);if(o&amp;&amp;n.setAttribute(&#34;href&#34;,s),i?.querySelector(s))return[];if(c)return i?.appendChild(c.cloneNode(!0)),[];if(o)return[_(t,{url:o,responseType:&#34;text&#34;}).then(h=&gt;{i?.insertAdjacentHTML(&#34;beforeend&#34;,h)})]}return[]}function _e(n,t){let{tasks:e}=t;v(n)&amp;&amp;((H(n)||ye(n))&amp;&amp;e.push(...Zt(n,t)),ot(n)&amp;&amp;e.push(...Jt(n,t))),L(n)&amp;&amp;e.push(...Qt(n.style,t)),n.childNodes.forEach(i=&gt;{_e(i,t)})}async function en(n,t){let{ownerDocument:e,svgStyleElement:i,fontFamilies:r,fontCssTexts:o,tasks:l,font:s}=t;if(!(!e||!i||!r.size))if(s&amp;&amp;s.cssText){let c=ue(s.cssText,t);i.appendChild(e.createTextNode(`${c}
-`))}else{let c=Array.from(e.styleSheets).filter(a=&gt;{try{return&#34;cssRules&#34;in a&amp;&amp;!!a.cssRules.length}catch(d){return t.log.warn(`Error while reading CSS rules from ${a.href}`,d),!1}});await Promise.all(c.flatMap(a=&gt;Array.from(a.cssRules).map(async(d,u)=&gt;{if(rt(d)){let m=u+1,g=d.href,f=&#34;&#34;;try{f=await _(t,{url:g,requestType:&#34;text&#34;,responseType:&#34;text&#34;})}catch(p){t.log.warn(`Error fetch remote css import from ${g}`,p)}let E=f.replace(Me,(p,w,b)=&gt;p.replace(b,we(b,g)));for(let p of nn(E))try{a.insertRule(p,p.startsWith(&#34;@import&#34;)?m+=1:a.cssRules.length)}catch(w){t.log.warn(&#34;Error inserting rule from remote css import&#34;,{rule:p,error:w})}}}))),c.flatMap(a=&gt;Array.from(a.cssRules)).filter(a=&gt;it(a)&amp;&amp;Le(a.style.getPropertyValue(&#34;src&#34;))&amp;&amp;Te(a.style.getPropertyValue(&#34;font-family&#34;))?.some(d=&gt;r.has(d))).forEach(a=&gt;{let d=a,u=o.get(d.cssText);u?i.appendChild(e.createTextNode(`${u}
-`)):l.push(xe(d.cssText,d.parentStyleSheet?d.parentStyleSheet.href:null,t).then(m=&gt;{m=ue(m,t),o.set(d.cssText,m),i.appendChild(e.createTextNode(`${m}
-`))}))})}}var tn=/(\/\*[\s\S]*?\*\/)/g,de=/((@.*?keyframes [\s\S]*?){([\s\S]*?}\s*?)})/gi;function nn(n){if(n==null)return[];let t=[],e=n.replace(tn,&#34;&#34;);for(;;){let o=de.exec(e);if(!o)break;t.push(o[0])}e=e.replace(de,&#34;&#34;);let i=/@import[\s\S]*?url\([^)]*\)[\s\S]*?;/gi,r=new RegExp(&#34;((\\s*?(?:\\/\\*[\\s\\S]*?\\*\\/)?\\s*?@media[\\s\\S]*?){([\\s\\S]*?)}\\s*?})|(([\\s\\S]*?){([\\s\\S]*?)})&#34;,&#34;gi&#34;);for(;;){let o=i.exec(e);if(o)r.lastIndex=i.lastIndex;else if(o=r.exec(e),o)i.lastIndex=r.lastIndex;else break;t.push(o[0])}return t}var rn=/url\([^)]+\)\s*format\(([&#34;&#39;]?)([^&#34;&#39;]+)\1\)/g,on=/src:\s*(?:url\([^)]+\)\s*format\([^)]+\)[,;]\s*)+/g;function ue(n,t){let{font:e}=t,i=e?e?.preferredFormat:void 0;return i?n.replace(on,r=&gt;{for(;;){let[o,,l]=rn.exec(r)||[];if(!l)return&#34;&#34;;if(l===i)return`src: ${o};`}}):n}async function sn(n,t){let e=await z(n,t);if(v(e.node)&amp;&amp;I(e.node))return e.node;let{ownerDocument:i,log:r,tasks:o,svgStyleElement:l,svgDefsElement:s,svgStyles:c,font:h,progress:a,autoDestruct:d,onCloneNode:u,onEmbedNode:m,onCreateForeignObjectSvg:g}=e;r.time(&#34;clone node&#34;);let f=await j(e.node,e,!0);if(l&amp;&amp;i){let S=&#34;&#34;;c.forEach((C,T)=&gt;{S+=`${C.join(`,
-`)} {
-  ${T}
-}
-`}),l.appendChild(i.createTextNode(S))}r.timeEnd(&#34;clone node&#34;),await u?.(f),h!==!1&amp;&amp;v(f)&amp;&amp;(r.time(&#34;embed web font&#34;),await en(f,e),r.timeEnd(&#34;embed web font&#34;)),r.time(&#34;embed node&#34;),_e(f,e);let E=o.length,p=0,w=async()=&gt;{for(;;){let S=o.pop();if(!S)break;try{await S}catch(C){e.log.warn(&#34;Failed to run task&#34;,C)}a?.(++p,E)}};a?.(p,E),await Promise.all([...Array.from({length:4})].map(w)),r.timeEnd(&#34;embed node&#34;),await m?.(f);let b=ln(f,e);return s&amp;&amp;b.insertBefore(s,b.children[0]),l&amp;&amp;b.insertBefore(l,b.children[0]),d&amp;&amp;Yt(e),await g?.(b),b}function ln(n,t){let{width:e,height:i}=t,r=bt(e,i,n.ownerDocument),o=r.ownerDocument.createElementNS(r.namespaceURI,&#34;foreignObject&#34;);return o.setAttributeNS(null,&#34;x&#34;,&#34;0%&#34;),o.setAttributeNS(null,&#34;y&#34;,&#34;0%&#34;),o.setAttributeNS(null,&#34;width&#34;,&#34;100%&#34;),o.setAttributeNS(null,&#34;height&#34;,&#34;100%&#34;),o.append(n),r.appendChild(o),r}async function an(n,t){let e=await z(n,t),i=await sn(e),r=yt(i,e.isEnable(&#34;removeControlCharacter&#34;));e.autoDestruct||(e.svgStyleElement=Ce(e.ownerDocument),e.svgDefsElement=e.ownerDocument?.createElementNS(V,&#34;defs&#34;),e.svgStyles.clear());let o=R(r,i.ownerDocument);return await Lt(o,e)}async function q(n,t){let e=await z(n,t),{log:i,type:r,quality:o,dpi:l}=e,s=await an(e);i.time(&#34;canvas to blob&#34;);let c=await wt(s,r,o);if([&#34;image/png&#34;,&#34;image/jpeg&#34;].includes(r)&amp;&amp;l){let h=await Tt(c.slice(0,33)),a=new Uint8Array(h);return r===&#34;image/png&#34;?a=Je(a,l):r===&#34;image/jpeg&#34;&amp;&amp;(a=je(a,l)),i.timeEnd(&#34;canvas to blob&#34;),new Blob([a,c.slice(33)],{type:r})}return i.timeEnd(&#34;canvas to blob&#34;),c}var P={METADATA:&#34;data-replit-metadata&#34;,COMPONENT_NAME:&#34;data-component-name&#34;};var Ie={color:&#34;color&#34;,radius:&#34;borderTopLeftRadius&#34;,text:&#34;fontSize&#34;,font:&#34;fontFamily&#34;};function De(n){try{let t=new URL(n);return cn(t)?!0:y.ALLOWED_PARENT_DOMAINS.some(e=&gt;t.hostname===e.slice(1)||t.hostname.endsWith(e))}catch{return!1}}function cn(n){return n.protocol!==&#34;http:&#34;||!n.port?!1:n.hostname===&#34;localhost&#34;||n.hostname===&#34;127.0.0.1&#34;||n.hostname===&#34;[::1]&#34;}function W(n){if(!n)return null;let t=document.elementFromPoint(n.clientX,n.clientY);return t instanceof HTMLElement?t:null}function hn(n,t=300){if(!n)return&#34;&#34;;let e=String(n);return e.length&lt;=t?e:e.slice(0,t)+&#34;...&#34;}function x(n){let t=n.getAttribute(P.COMPONENT_NAME)??n.tagName.toLowerCase();return hn(t,50)}function Q(n){return n.className.toString?n.className.toString():String(n.className)}function Ne(n,t=80){let e=&#34;&#34;;for(let i=0;i&lt;n.childNodes.length;i++){let r=n.childNodes[i];if(r.nodeType===Node.TEXT_NODE&amp;&amp;(e+=r.textContent??&#34;&#34;,e.length&gt;t))return e.slice(0,t)+&#34;...&#34;}return e.trim()}var dn=new Set([&#34;script&#34;,&#34;style&#34;,&#34;noscript&#34;,&#34;link&#34;,&#34;meta&#34;,&#34;br&#34;,&#34;svg&#34;]);function Oe(n){let t={children:[],parent:null};return Object.defineProperty(t,&#34;parent&#34;,{value:n,writable:!0,enumerable:!1,configurable:!0}),t}function Be(n,t,e,i){let r=Oe(t),o={tagName:n.tagName.toLowerCase(),textContent:Ne(n),id:n.id||void 0,className:Q(n)||void 0,nodeId:e.get(n),relatedElements:r};i.set(n,o);for(let l=0;l&lt;n.children.length;l++)Be(n.children[l],o,e,i)}var G=class{ids=new WeakMap;nextId=0;get(t){let e=this.ids.get(t);if(e!==void 0)return e;let i=this.nextId++;return this.ids.set(t,i),i}};function Z(n,t,e,i,r){let o=e.get(n),l=Oe(t),s=l.children,c={tagName:n.tagName.toLowerCase(),textContent:Ne(n),id:n.id||void 0,className:Q(n)||void 0,nodeId:o,relatedElements:l};i.set(n,c);for(let h=0;h&lt;n.children.length;h++){let a=n.children[h],d=a.tagName.toLowerCase();if(a!==r){if(d===&#34;svg&#34;){Be(a,c,e,i);continue}dn.has(d)||s.push(Z(a,c,e,i,r))}}return c}function un(n){let t={};if(typeof document&gt;&#34;u&#34;||typeof CSS&gt;&#34;u&#34;)return t;let e=document.createElement(&#34;div&#34;);e.style.cssText=&#34;position:fixed;left:-9999px;top:-9999px;visibility:hidden;pointer-events:none&#34;;try{document.body.appendChild(e);let i=window.getComputedStyle(e);for(let[r,o]of Object.entries(n)){let l=Ie[r];l&amp;&amp;(t[r]=o.map(({suffix:s,expr:c})=&gt;{let h=&#34;&#34;;try{e.style[l]=&#34;&#34;,e.style[l]=c,h=i[l]}catch{h=&#34;&#34;}return{suffix:s,value:h}}))}}catch{}finally{e.remove()}return t}function gn(){let n=typeof window&gt;&#34;u&#34;?void 0:window.REPLIT_APP_THEME_TOKENS;if(n)return un(n)}function J(n,t){let e=window.getComputedStyle(n),i=p=&gt;p.toLowerCase()===&#34;currentcolor&#34;?e.color:p,r=i(e.borderTopColor),o=i(e.borderRightColor),l=i(e.borderBottomColor),s=i(e.borderLeftColor),c=n.nextElementSibling,h=n.parentElement?.parentElement??null,a=mn(n),d={backgroundColor:e.backgroundColor,borderTopColor:r,borderRightColor:o,borderBottomColor:l,borderLeftColor:s,borderTopLeftRadius:e.borderTopLeftRadius,borderTopRightRadius:e.borderTopRightRadius,borderBottomRightRadius:e.borderBottomRightRadius,borderBottomLeftRadius:e.borderBottomLeftRadius,borderTopWidth:e.borderTopWidth,borderRightWidth:e.borderRightWidth,borderBottomWidth:e.borderBottomWidth,borderLeftWidth:e.borderLeftWidth,color:e.color,display:e.display,position:e.position,width:e.width,height:e.height,fontSize:e.fontSize,fontFamily:e.fontFamily,fontWeight:e.fontWeight,margin:e.margin,padding:e.padding,opacity:e.opacity,textAlign:e.textAlign,flexDirection:e.flexDirection,flexWrap:e.flexWrap,justifyContent:e.justifyContent,alignItems:e.alignItems,gap:e.gap,rowGap:e.rowGap,columnGap:e.columnGap},u=t.get(n),m=n.parentElement?t.get(n.parentElement)??null:null,g={children:u?.relatedElements.children??[],parent:u?.relatedElements.parent??m,nextSibling:c?t.get(c)??void 0:void 0,grandParent:h?t.get(h)??void 0:void 0},f=gn();return{tagName:n.tagName.toLowerCase(),nodeId:u?.nodeId,elementPath:n.getAttribute(P.METADATA)??&#34;&#34;,elementName:x(n),textContent:n.textContent??&#34;&#34;,originalTextContent:n.getAttribute(&#34;data-original-text&#34;)?decodeURIComponent(n.getAttribute(&#34;data-original-text&#34;)??&#34;&#34;):void 0,srcAttribute:n.getAttribute(&#34;src&#34;)??&#34;&#34;,hasChildElements:n.childElementCount&gt;0,id:n.id,className:Q(n),colorVariables:a,...f?{themeTokens:f}:{},computedStyles:d,textAlign:e.textAlign,relatedElements:g}}function mn(n){let t=new Set([&#34;inherit&#34;,&#34;initial&#34;,&#34;unset&#34;,&#34;revert&#34;,&#34;revert-layer&#34;]),e={},i=window.getComputedStyle(n);for(let r=0;r&lt;i.length;r++){let o=i.item(r);if(!o.startsWith(&#34;--&#34;))continue;let l=i.getPropertyValue(o).trim();!l||t.has(l.toLowerCase())||!CSS.supports(&#34;color&#34;,l)||(e[o]=l)}return e}async function ke(n){try{let e=window.getComputedStyle(n).backgroundColor;return Fe(e)&amp;&amp;(e=window.getComputedStyle(document.documentElement).backgroundColor),await q(n,{type:&#34;image/png&#34;,backgroundColor:e})}catch(t){console.error(&#34;[replit-cartographer] Failed to take screenshot:&#34;,t);return}}function Fe(n){return n===&#34;transparent&#34;||n===&#34;rgba(0, 0, 0, 0)&#34;||n.endsWith(&#34;, 0)&#34;)||n.endsWith(&#34;,0)&#34;)}async function ee({restoreScrollPosition:n=!1}={}){try{let t=document.documentElement,e=window.getComputedStyle(t).backgroundColor,i=Fe(e)?&#34;#ffffff&#34;:e;return await q(t,{type:&#34;image/png&#34;,backgroundColor:i,...n?{features:{restoreScrollPosition:!0}}:{}})}catch(t){console.error(&#34;[replit-cartographer] Failed to take page screenshot:&#34;,t);return}}function fn(){return{x:window.scrollX||document.documentElement.scrollLeft||document.body?.scrollLeft||0,y:window.scrollY||document.documentElement.scrollTop||document.body?.scrollTop||0}}function pn(){return{width:Math.max(1,Math.ceil(window.innerWidth||document.documentElement.clientWidth)),height:Math.max(1,Math.ceil(window.innerHeight||document.documentElement.clientHeight))}}function En(n){let t=document.documentElement,e=document.body;return{width:Math.max(n.width,t.scrollWidth,t.offsetWidth,t.clientWidth,e?.scrollWidth??0,e?.offsetWidth??0,e?.clientWidth??0),height:Math.max(n.height,t.scrollHeight,t.offsetHeight,t.clientHeight,e?.scrollHeight??0,e?.offsetHeight??0,e?.clientHeight??0)}}function bn(n){return new Promise((t,e)=&gt;{let i=URL.createObjectURL(n),r=new Image,o=()=&gt;{URL.revokeObjectURL(i)};r.onload=()=&gt;{o(),t(r)},r.onerror=()=&gt;{o(),e(new Error(&#34;Failed to load screenshot blob&#34;))},r.src=i})}function yn(n){return new Promise(t=&gt;{n.toBlob(e=&gt;{t(e??void 0)},&#34;image/png&#34;)})}function Pe({documentSize:n,imageSize:t,scrollOffset:e,viewportSize:i}){if(t&lt;=i+1)return{start:0,size:Math.max(1,t)};let r=t/n,o=Math.max(1,Math.min(t,Math.ceil(i*r))),l=Math.max(0,t-o);return{start:Math.min(l,Math.max(0,Math.floor(e*r))),size:o}}function wn({documentSize:n,rootRect:t,scrollOffset:e,viewport:i}){let r=({rootAxisSize:l,viewportAxisSize:s})=&gt;Math.ceil(l)&lt;=s+1,o=({documentAxisSize:l,rootAxisSize:s,scrollAxisOffset:c,viewportAxisSize:h})=&gt;c!==0&amp;&amp;l&gt;h+1&amp;&amp;r({rootAxisSize:s,viewportAxisSize:h});return o({documentAxisSize:n.width,rootAxisSize:t.width,scrollAxisOffset:e.x,viewportAxisSize:i.width})||o({documentAxisSize:n.height,rootAxisSize:t.height,scrollAxisOffset:e.y,viewportAxisSize:i.height})}async function Ue(){try{let n=pn(),t=En(n),e=fn(),i=document.documentElement.getBoundingClientRect(),r=wn({documentSize:t,rootRect:i,scrollOffset:e,viewport:n}),o=r?{x:0,y:0}:e,l=await ee({restoreScrollPosition:r});if(!l)return;let s=await bn(l),c={height:s.naturalHeight||s.height,width:s.naturalWidth||s.width},h=Pe({documentSize:t.width,imageSize:c.width,scrollOffset:o.x,viewportSize:n.width}),a=Pe({documentSize:t.height,imageSize:c.height,scrollOffset:o.y,viewportSize:n.height}),d=document.createElement(&#34;canvas&#34;);d.width=h.size,d.height=a.size;let u=d.getContext(&#34;2d&#34;);return u?(u.drawImage(s,h.start,a.start,h.size,a.size,0,0,h.size,a.size),await yn(d)):void 0}catch{return}}function te(n){let t=n.getBoundingClientRect(),e=window.innerHeight,i=window.innerWidth;return t.bottom&gt;0&amp;&amp;t.top&lt;e&amp;&amp;t.right&gt;0&amp;&amp;t.left&lt;i}function D(n,t=y.MAX_SIBLING_HIGHLIGHTERS,e=!1){let o=n.getAttribute(P.METADATA);if(!o)return[];let l=`[${P.METADATA}=&#34;${o}&#34;]`,s=document,c=n.parentElement;c&amp;&amp;c.childElementCount&gt;50&amp;&amp;(s=c);let h=s.querySelectorAll(l),a=Math.min(t,5e3),d=[],u=0;for(let m=0;m&lt;h.length&amp;&amp;u&lt;a;m++){let g=h[m];if(g instanceof HTMLElement&amp;&amp;g!==n){if(e&amp;&amp;!te(g))continue;d.push(g),u++}}return d}function Ve(n,t,e){let i=n.children;for(let r=0;r&lt;i.length;r++)if(e.value+=1,e.value&gt;t||Ve(i[r],t,e))return!0;return!1}function Ge(n){let t={value:0};return Ve(n,y.MAX_DESCENDANTS_FOR_SCREENSHOT,t)}var Sn=9,We=2,vn=new Set([&#34;auto&#34;,&#34;scroll&#34;,&#34;overlay&#34;]),Tn=32;function Cn(n,t){let e=document.createElement(&#34;div&#34;).style;e.cssText=n;let i=document.createElement(&#34;div&#34;).style;i.cssText=t;for(let r=0;r&lt;i.length;r+=1){let o=i.item(r);o&amp;&amp;e.setProperty(o,i.getPropertyValue(o),i.getPropertyPriority(o))}return e.cssText.trim()}function An(n){let t=n.getAttribute(&#34;data-original-style&#34;);return t!==null?decodeURIComponent(t):n.getAttribute(&#34;style&#34;)??&#34;&#34;}function Rn(n){return Math.ceil(Math.max(n.body?.scrollHeight??0,n.documentElement?.scrollHeight??0,n.body?.offsetHeight??0,n.documentElement?.offsetHeight??0,n.body?.clientHeight??0,n.documentElement?.clientHeight??0))}function $e(n){return vn.has(n)}function Hn(n,t){let i=(n.defaultView??window).getComputedStyle(t);return t.scrollHeight&gt;t.clientHeight&amp;&amp;($e(i.overflowY)||$e(i.overflow))}function xn(n){if(n.parentElement)return n.parentElement;let t=n.getRootNode();return t instanceof ShadowRoot&amp;&amp;t.host instanceof HTMLElement?t.host:null}function Ln(n,t){let e=n.defaultView??window,i=t;for(;i;){let r=e.getComputedStyle(i);if(r.visibility===&#34;hidden&#34;||r.display===&#34;none&#34;||parseFloat(r.opacity)===0)return!0;i=xn(i)}return!1}function*Ye(n){for(let t of n.querySelectorAll(&#34;*&#34;))yield t,t.shadowRoot&amp;&amp;(yield*Ye(t.shadowRoot))}function Mn(n,t){let e=Xe(n,t);return e.height&gt;0&amp;&amp;e.width&gt;0}function _n(n){return Math.ceil(Math.max(n.scrollHeight,n.offsetHeight,n.clientHeight))}function Xe(n,t){let e=n.defaultView??window,i=t.getBoundingClientRect(),r=Math.max(i.top,0),o=Math.min(i.right,e.innerWidth),l=Math.min(i.bottom,e.innerHeight),s=Math.max(i.left,0);return{height:Math.max(0,Math.ceil(l-r)),width:Math.max(0,Math.ceil(o-s))}}function Ke(n){return n.visibleHeight*n.visibleWidth}function In(n,t){if(!t)return!0;let e=Ke(n),i=Ke(t);return e!==i?e&gt;i:n.visibleWidth!==t.visibleWidth?n.visibleWidth&gt;t.visibleWidth:n.visibleHeight!==t.visibleHeight?n.visibleHeight&gt;t.visibleHeight:n.contentHeight&gt;t.contentHeight}function Pn(n){if(!n.body)return 0;let t=null;for(let e of Ye(n.body)){if(!Hn(n,e)||Ln(n,e)||!Mn(n,e))continue;let i=Xe(n,e),r={contentHeight:_n(e),visibleHeight:i.height,visibleWidth:i.width};In(r,t)&amp;&amp;(t=r)}return t?.contentHeight??0}function Dn(n,t){let e=n.documentElement?.clientHeight??0;return t&gt;e+Tn}function Nn(n=document){let t=Rn(n);return Dn(n,t)?t:Math.max(t,Pn(n))}function On(n){Event.prototype.stopPropagation.call(n)}var N=class n{selectedElement=null;selectedSiblingElements=[];visibleSelectedSiblingElements=[];isActive=!1;isCanvasGestureRelayEnabled=!1;isContextMenuRelayEnabled=!1;lastHighlightedElement=null;enableEditing=!1;dragStartPointer=null;dragRelayPointerId=null;scrollGestureState=&#34;idle&#34;;scrollGestureTimer=null;hoverMessages=!1;shadowHost=null;shadowRoot=null;hoverHighlighter=null;hoverLabel=null;selectedHighlighter=null;selectedLabel=null;hoverSiblingHighlighters=[];selectedSiblingHighlighters=[];mutationObserver=null;stableIds=new G;nodeMap=new Map;throttledRecalculate=null;source;acceptsRawMessages;installedVersion;constructor({source:t=&#34;installed&#34;,acceptsRawMessages:e=!0,installedVersion:i}={}){this.source=t,this.acceptsRawMessages=e,this.installedVersion=i,this.setupMessageListener(),this.observeLightDarkModeSwitch(),this.setupPinchInterception(),this.setupScrollChaining(),this.setupDragInterception(),this.setupIframeDoubleClickRelay(),this.setupContextMenuInterception(),this.notifyScriptLoaded(),this.throttledRecalculate=this.throttleRAF(this.recalculateSelectedElement.bind(this))}throttleRAF(t){let e=null,i=null;return(...r)=&gt;{i=r,e===null&amp;&amp;(e=requestAnimationFrame(()=&gt;{i!==null&amp;&amp;t(...i),e=null,i=null}))}}isPureTextElement(t){if(!t||!(t instanceof HTMLElement))return!1;let e=t.tagName.toLowerCase();return e===&#34;style&#34;||e===&#34;script&#34;||e===&#34;img&#34;||t.childElementCount&gt;0?!1:Array.from(t.childNodes).every(r=&gt;r.nodeType===Node.TEXT_NODE)}initializeHighlighter(){this.shadowHost=document.createElement(&#34;div&#34;),this.shadowHost.style.all=&#34;initial&#34;,this.shadowRoot=this.shadowHost.attachShadow({mode:&#34;open&#34;}),document.body.appendChild(this.shadowHost);let t=document.createElement(&#34;style&#34;);t.textContent=se,this.shadowRoot.appendChild(t);let e=document.createElement(&#34;style&#34;);e.textContent=oe,document.head.appendChild(e),this.hoverHighlighter=document.createElement(&#34;div&#34;),this.hoverLabel=document.createElement(&#34;div&#34;),this.hoverHighlighter.className=&#34;beacon-highlighter beacon-hover-highlighter&#34;,this.hoverLabel.className=&#34;beacon-label beacon-hover-label&#34;,this.selectedHighlighter=document.createElement(&#34;div&#34;),this.selectedLabel=document.createElement(&#34;div&#34;),this.selectedHighlighter.className=&#34;beacon-highlighter beacon-selected-highlighter&#34;,this.selectedLabel.className=&#34;beacon-label beacon-selected-label&#34;,this.shadowRoot.appendChild(this.selectedHighlighter),this.shadowRoot.appendChild(this.selectedLabel),this.shadowRoot.appendChild(this.hoverHighlighter),this.shadowRoot.appendChild(this.hoverLabel)}setupMessageListener(){window.addEventListener(&#34;message&#34;,this.handleMessage.bind(this))}setupPinchInterception(){window.self!==window.top&amp;&amp;window.addEventListener(&#34;wheel&#34;,t=&gt;{!this.isCanvasGestureRelayEnabled||!this.isZoomModifierWheel(t)||(t.preventDefault(),this.postMessageToParent({type:&#34;PINCH_WHEEL&#34;,timestamp:Date.now(),deltaY:t.deltaY,clientX:t.clientX,clientY:t.clientY,shiftKey:t.shiftKey,altKey:t.altKey,ctrlKey:t.ctrlKey,metaKey:t.metaKey}))},{passive:!1})}setupIframeDoubleClickRelay(){window.self!==window.top&amp;&amp;(document.addEventListener(&#34;mousedown&#34;,t=&gt;{!this.shouldRelayIframeDoubleClick()||t.detail&lt;2||t.preventDefault()},!0),document.addEventListener(&#34;dblclick&#34;,t=&gt;{this.shouldRelayIframeDoubleClick()&amp;&amp;(t.preventDefault(),On(t),this.postMessageToParent({type:&#34;IFRAME_DOUBLE_CLICK&#34;,timestamp:Date.now(),clientX:t.clientX,clientY:t.clientY}))},!0))}setupContextMenuInterception(){window.self!==window.top&amp;&amp;window.addEventListener(&#34;contextmenu&#34;,t=&gt;{if(!this.isContextMenuRelayEnabled)return;t.preventDefault(),t[&#34;stopImmediatePropagation&#34;](),this.postMessageToParent({type:&#34;IFRAME_CONTEXT_MENU&#34;,timestamp:Date.now(),clientX:t.clientX,clientY:t.clientY,altKey:t.altKey,ctrlKey:t.ctrlKey,metaKey:t.metaKey,shiftKey:t.shiftKey})},{capture:!0})}isZoomModifierWheel(t){return t.ctrlKey||t.altKey||t.metaKey}static SCROLL_GESTURE_GAP_MS=150;setupScrollChaining(){window.self!==window.top&amp;&amp;window.addEventListener(&#34;wheel&#34;,t=&gt;{!this.isCanvasGestureRelayEnabled||this.isZoomModifierWheel(t)||(this.scrollGestureState===&#34;idle&#34;&amp;&amp;(this.scrollGestureState=this.shouldHandOffScrollToParent(t)?&#34;at-boundary&#34;:&#34;scrolling&#34;),this.scrollGestureTimer&amp;&amp;clearTimeout(this.scrollGestureTimer),this.scrollGestureTimer=setTimeout(()=&gt;{this.scrollGestureState=&#34;idle&#34;,this.scrollGestureTimer=null},n.SCROLL_GESTURE_GAP_MS),this.scrollGestureState===&#34;at-boundary&#34;&amp;&amp;(t.preventDefault(),this.postMessageToParent({type:&#34;SCROLL_BOUNDARY&#34;,timestamp:Date.now(),deltaX:t.deltaX,deltaY:t.deltaY,clientX:t.clientX,clientY:t.clientY,shiftKey:t.shiftKey,altKey:t.altKey,ctrlKey:t.ctrlKey,metaKey:t.metaKey})))},{passive:!1})}shouldHandOffScrollToParent(t){let e=this.getRelevantScrollAxes(this.normalizeScrollDeltas(t));if(e.length===0)return!1;let i=document.elementFromPoint(t.clientX,t.clientY),r=e.map(({axis:o,delta:l})=&gt;this.canAnyAncestorContinueScrollingOnAxis(i,o,l));return e.length===1?!r[0]:r.every(o=&gt;!o)}getRelevantScrollAxes(t){let e=Math.abs(t.deltaX),i=Math.abs(t.deltaY);return e===0&amp;&amp;i===0?[]:e===0?[{axis:&#34;y&#34;,delta:t.deltaY}]:i===0?[{axis:&#34;x&#34;,delta:t.deltaX}]:e&gt;=i*We?[{axis:&#34;x&#34;,delta:t.deltaX}]:i&gt;=e*We?[{axis:&#34;y&#34;,delta:t.deltaY}]:[{axis:&#34;x&#34;,delta:t.deltaX},{axis:&#34;y&#34;,delta:t.deltaY}]}normalizeScrollDeltas(t){let{deltaX:e,deltaY:i}=t;return t.shiftKey&amp;&amp;!this.isMacPlatform()&amp;&amp;(e=i,i=0),{deltaX:e,deltaY:i}}isMacPlatform(){return navigator.platform.toUpperCase().includes(&#34;MAC&#34;)}canAnyAncestorContinueScrollingOnAxis(t,e,i){let r=t;for(;r;){if(r instanceof HTMLElement&amp;&amp;this.canElementScrollInDirection(r,e,i))return!0;r=r.parentElement}let o=document.scrollingElement;return o instanceof HTMLElement&amp;&amp;this.canElementScrollInDirection(o,e,i)}canElementScrollInDirection(t,e,i){if(i===0||!this.isScrollableOnAxis(t,e))return!1;let r=e===&#34;x&#34;?t.scrollLeft:t.scrollTop,o=e===&#34;x&#34;?t.scrollWidth-t.clientWidth:t.scrollHeight-t.clientHeight;return o&lt;=0?!1:i&gt;0?r&lt;o-1:r&gt;1}isScrollableOnAxis(t,e){let i=e===&#34;x&#34;?getComputedStyle(t).overflowX:getComputedStyle(t).overflowY;return t===document.scrollingElement||t===document.documentElement||t===document.body?i!==&#34;hidden&#34;&amp;&amp;i!==&#34;clip&#34;:i===&#34;auto&#34;||i===&#34;overlay&#34;||i===&#34;scroll&#34;}setupDragInterception(){if(window.self===window.top)return;window.addEventListener(&#34;pointerdown&#34;,e=&gt;{if(!this.shouldRelayCanvasPointerGestures()){this.dragStartPointer=null,this.dragRelayPointerId=null;return}e.button!==0||e.isPrimary===!1||(this.dragStartPointer={pointerId:e.pointerId,button:e.button,clientX:e.clientX,clientY:e.clientY,shiftKey:e.shiftKey,altKey:e.altKey,ctrlKey:e.ctrlKey,metaKey:e.metaKey})}),window.addEventListener(&#34;pointermove&#34;,e=&gt;{if(!this.shouldRelayCanvasPointerGestures()){this.dragStartPointer=null,this.dragRelayPointerId=null;return}if(this.dragRelayPointerId===e.pointerId){e.preventDefault(),this.postMessageToParent({type:&#34;DRAG_MOVE&#34;,timestamp:Date.now(),pointerId:e.pointerId,movementX:e.movementX,movementY:e.movementY,pressure:e.pressure,shiftKey:e.shiftKey,altKey:e.altKey,ctrlKey:e.ctrlKey,metaKey:e.metaKey});return}let i=this.dragStartPointer;if(i===null||i.pointerId!==e.pointerId)return;let r=e.clientX-i.clientX,o=e.clientY-i.clientY;r*r+o*o&lt;Sn||(e.preventDefault(),this.cancelInteraction(),this.dragStartPointer=null,this.dragRelayPointerId=e.pointerId,this.postMessageToParent({type:&#34;DRAG_START&#34;,timestamp:Date.now(),pointerId:e.pointerId,button:i.button,pressure:e.pressure,isPen:e.pointerType===&#34;pen&#34;,clientX:e.clientX,clientY:e.clientY,startClientX:i.clientX,startClientY:i.clientY,shiftKey:i.shiftKey,altKey:i.altKey,ctrlKey:i.ctrlKey,metaKey:i.metaKey}))});let t=e=&gt;{this.dragStartPointer?.pointerId===e.pointerId&amp;&amp;(this.dragStartPointer=null),this.dragRelayPointerId===e.pointerId&amp;&amp;(this.postMessageToParent({type:&#34;DRAG_END&#34;,timestamp:Date.now(),pointerId:e.pointerId,button:e.button,clientX:e.clientX,clientY:e.clientY,pressure:e.pressure,isPen:e.pointerType===&#34;pen&#34;,shiftKey:e.shiftKey,altKey:e.altKey,ctrlKey:e.ctrlKey,metaKey:e.metaKey}),this.dragRelayPointerId=null)};window.addEventListener(&#34;pointerup&#34;,t),window.addEventListener(&#34;pointercancel&#34;,t)}shouldRelayCanvasPointerGestures(){return this.isCanvasGestureRelayEnabled&amp;&amp;!(this.enableEditing&amp;&amp;this.selectedElement!==null)}shouldRelayIframeDoubleClick(){return this.isCanvasGestureRelayEnabled&amp;&amp;!this.enableEditing}notifyScriptLoaded(){let t={type:&#34;SELECTOR_SCRIPT_LOADED&#34;,timestamp:Date.now(),version:B,source:this.source,supportsTargetedRouting:!0,...this.installedVersion?{installedVersion:this.installedVersion}:{}};this.postMessageToParent(t)}postMessageToParent(t){window.parent&amp;&amp;window.parent.postMessage(t,&#34;*&#34;)}handleMouseMove=t=&gt;{if(this.isActive){if(this.hoverMessages){let e=W(t);if(!e||e===this.shadowHost||e===this.selectedElement||e===this.lastHighlightedElement)return;this.lastHighlightedElement=e;let i=e===document.body||e===document.documentElement?document.body:e,r=i.getBoundingClientRect();this.postMessageToParent({type:&#34;ELEMENT_HOVERED&#34;,timestamp:Date.now(),elementBounds:{x:r.x,y:r.y,width:r.width,height:r.height},elementName:x(i)});return}if(this.hoverHighlighter){let e=W(t);if(!e||e===this.hoverHighlighter||e===this.selectedHighlighter||e===this.shadowHost||this.selectedSiblingHighlighters.includes(e)||this.hoverSiblingHighlighters.includes(e)){this.hideHighlight(this.hoverHighlighter,this.hoverLabel),this.lastHighlightedElement=null,this.clearHoverSiblingHighlighters();return}if(e===this.selectedElement){this.hideHighlight(this.hoverHighlighter,this.hoverLabel),this.lastHighlightedElement=null,this.clearHoverSiblingHighlighters();return}this.lastHighlightedElement&amp;&amp;this.lastHighlightedElement!==e&amp;&amp;this.lastHighlightedElement!==this.selectedElement&amp;&amp;this.lastHighlightedElement.removeAttribute(&#34;contenteditable&#34;),this.lastHighlightedElement=e,this.updateHighlighterPosition(e,this.hoverHighlighter,this.hoverLabel)}}};handleMouseLeave=()=&gt;{if(this.isActive){if(this.hoverMessages){this.lastHighlightedElement&amp;&amp;(this.lastHighlightedElement=null,this.postMessageToParent({type:&#34;ELEMENT_HOVERED&#34;,timestamp:Date.now(),elementBounds:null,elementName:&#34;&#34;}));return}this.hoverHighlighter&amp;&amp;(this.hoverHighlighter.style.opacity=&#34;0&#34;),this.hoverLabel&amp;&amp;(this.hoverLabel.style.opacity=&#34;0&#34;),this.hoverSiblingHighlighters.length&gt;0&amp;&amp;this.clearHoverSiblingHighlighters(),this.lastHighlightedElement&amp;&amp;this.lastHighlightedElement!==this.selectedElement&amp;&amp;this.lastHighlightedElement.removeAttribute(&#34;contenteditable&#34;)}};calculateLabelPosition(t,e){return e&lt;28?{top:`${e}px`,left:`${t.left}px`,transform:&#34;none&#34;,marginTop:&#34;2px&#34;}:{top:`${e}px`,left:`${t.left}px`,transform:&#34;translateY(-100%)&#34;,marginTop:&#34;-4px&#34;}}updateHighlighterPosition(t,e,i){if(!e||!i)return;let r=D(t,y.MAX_SIBLING_HIGHLIGHTERS,!1);this.enableEditing&amp;&amp;r.length&lt;=1&amp;&amp;t===this.selectedElement&amp;&amp;this.isPureTextElement(t)&amp;&amp;t.setAttribute(&#34;contenteditable&#34;,&#34;plaintext-only&#34;);let o=t.getBoundingClientRect(),l=window.innerHeight,s=Math.max(0,o.top),c=Math.min(l,o.bottom),h=Math.max(0,c-s);Object.assign(e.style,{opacity:h&gt;0?&#34;1&#34;:&#34;0&#34;,top:`${s}px`,left:`${o.left}px`,width:`${o.width}px`,height:`${h}px`}),i.textContent=x(t);let a=this.calculateLabelPosition(o,s);Object.assign(i.style,{...a,opacity:h&gt;0?&#34;1&#34;:&#34;0&#34;}),e===this.selectedHighlighter?this.highlightSelectedSiblings(t):this.highlightHoverSiblings(t)}hideHighlight(t,e){t&amp;&amp;(t.style.opacity=&#34;0&#34;),e&amp;&amp;(e.style.opacity=&#34;0&#34;);let i=t===this.hoverHighlighter,r=t===this.selectedHighlighter;i&amp;&amp;this.clearHoverSiblingHighlighters(),r&amp;&amp;this.clearSelectedSiblingHighlighters()}async buildElementPayload(t){this.nodeMap=new Map,Z(document.body,null,this.stableIds,this.nodeMap,this.shadowHost);let e=J(t,this.nodeMap),i;if(!Ge(t))try{i=await ke(t)}catch(r){console.error(&#34;[replit-cartographer] Error capturing element screenshot:&#34;,r)}return{metadata:e,screenshotBlob:i}}handleClick=async t=&gt;{if(!this.isActive)return;t.preventDefault(),t.stopPropagation();let e=W(t);if((!e||e===this.hoverHighlighter||e===this.selectedHighlighter||e===this.shadowHost)&amp;&amp;(e=this.lastHighlightedElement),!e||e===this.selectedElement)return;if(this.hoverMessages){this.selectedElement=e,document.getElementById(&#34;replit-beacon-crosshair&#34;)?.remove();let s=e===document.body||e===document.documentElement?document.body:e,{metadata:c,screenshotBlob:h}=await this.buildElementPayload(s),a=s.getBoundingClientRect();this.postMessageToParent({type:&#34;ELEMENT_SELECTED&#34;,payload:{...c,screenshotBlob:h??void 0,siblingCount:0},elementBounds:{x:a.x,y:a.y,width:a.width,height:a.height},timestamp:Date.now()});return}this.clearSelection(),this.selectedElement=e;let i=D(e),r=i.length&gt;0;r&amp;&amp;this.highlightSelectedSiblings(e),e.hasAttribute(&#34;data-original-text&#34;)||e.setAttribute(&#34;data-original-text&#34;,encodeURIComponent(e.textContent??&#34;&#34;)),!e.hasAttribute(&#34;data-original-style&#34;)&amp;&amp;e.hasAttribute(&#34;style&#34;)&amp;&amp;e.setAttribute(&#34;data-original-style&#34;,encodeURIComponent(e.getAttribute(&#34;style&#34;)??&#34;&#34;)),!e.hasAttribute(&#34;data-original-src&#34;)&amp;&amp;e.hasAttribute(&#34;src&#34;)&amp;&amp;e.setAttribute(&#34;data-original-src&#34;,encodeURIComponent(e.getAttribute(&#34;src&#34;)??&#34;&#34;)),!r&amp;&amp;this.enableEditing&amp;&amp;this.isPureTextElement(e)&amp;&amp;(this.selectedElement.setAttribute(&#34;contenteditable&#34;,&#34;plaintext-only&#34;),this.selectedElement.focus()),this.selectedHighlighter&amp;&amp;this.selectedLabel&amp;&amp;(this.selectedHighlighter.style.outlineStyle=&#34;solid&#34;,this.selectedHighlighter.style.opacity=&#34;1&#34;,this.selectedHighlighter.style.pointerEvents=&#34;none&#34;,this.selectedLabel.style.opacity=&#34;1&#34;,this.selectedLabel.textContent=x(e)),this.hoverHighlighter&amp;&amp;(this.hoverHighlighter.style.opacity=&#34;0&#34;,this.hoverHighlighter.style.pointerEvents=&#34;none&#34;),this.hoverLabel&amp;&amp;(this.hoverLabel.style.opacity=&#34;0&#34;),this.clearHoverSiblingHighlighters(),this.updateHighlighterPosition(e,this.selectedHighlighter,this.selectedLabel);let{metadata:o,screenshotBlob:l}=await this.buildElementPayload(e);this.observeSelectedElement(),this.postMessageToParent({type:&#34;ELEMENT_SELECTED&#34;,payload:{...o,screenshotBlob:l??void 0,siblingCount:r?i.length:0},timestamp:Date.now()})};restoreElements(){document.querySelectorAll(&#39;[data-replit-dirty=&#34;true&#34;], [data-original-text], [data-original-style], [data-original-src]&#39;).forEach(e=&gt;{if(e.hasAttribute(&#34;data-original-text&#34;)){if(e.textContent!==decodeURIComponent(e.getAttribute(&#34;data-original-text&#34;)||&#34;&#34;)){let i=decodeURIComponent(e.getAttribute(&#34;data-original-text&#34;)||&#34;&#34;);e.textContent=i}e.removeAttribute(&#34;data-original-text&#34;)}if(e.hasAttribute(&#34;data-original-style&#34;)){let i=decodeURIComponent(e.getAttribute(&#34;data-original-style&#34;)||&#34;&#34;);e.setAttribute(&#34;style&#34;,i),e.removeAttribute(&#34;data-original-style&#34;)}else e.removeAttribute(&#34;style&#34;);if(e.hasAttribute(&#34;data-original-src&#34;)&amp;&amp;e.getAttribute(&#34;src&#34;)!==decodeURIComponent(e.getAttribute(&#34;data-original-src&#34;)||&#34;&#34;)){let i=decodeURIComponent(e.getAttribute(&#34;data-original-src&#34;)||&#34;&#34;);e.setAttribute(&#34;src&#34;,i),e.removeAttribute(&#34;data-original-src&#34;)}e.removeAttribute(&#34;data-replit-dirty&#34;)})}clearSelection(){this.selectedElement&amp;&amp;(this.selectedElement.removeAttribute(&#34;contenteditable&#34;),this.selectedElement=null),this.clearSelectedSiblingHighlighters(),this.mutationObserver&amp;&amp;(this.mutationObserver.disconnect(),this.mutationObserver=null)}isCommandMessage(t){switch(t.type){case&#34;TOGGLE_REPLIT_VISUAL_EDITOR&#34;:case&#34;CLEAR_SELECTION&#34;:case&#34;UPDATE_SELECTED_ELEMENT&#34;:case&#34;CLEAR_ELEMENT_DIRTY&#34;:case&#34;RESTORE_DIRTY_ELEMENTS&#34;:case&#34;APPLY_THEME_PREVIEW&#34;:case&#34;CLEAR_THEME_PREVIEW&#34;:case&#34;SCREENSHOT_PAGE&#34;:case&#34;REQUEST_CONTENT_HEIGHT&#34;:case&#34;RELAY_TO_IFRAME&#34;:return!0;default:return!1}}getMessageForThisBeacon(t){return t.type===&#34;REPLIT_BEACON_TARGETED_MESSAGE&#34;?t.targetSource!==this.source||!t.message||!this.isCommandMessage(t.message)?null:t.message:!this.acceptsRawMessages||!this.isCommandMessage(t)?null:t}handleMessage=t=&gt;{if(!De(t.origin))return;let e=t.data;if(!e||typeof e!=&#34;object&#34;)return;let i=this.getMessageForThisBeacon(e);if(i)switch(i.type){case&#34;TOGGLE_REPLIT_VISUAL_EDITOR&#34;:{this.handleVisualEditorToggle(i);break}case&#34;CLEAR_SELECTION&#34;:{if(this.clearSelection(),this.hideHighlight(this.selectedHighlighter,this.selectedLabel),this.lastHighlightedElement=null,this.hoverMessages&amp;&amp;!document.getElementById(&#34;replit-beacon-crosshair&#34;)){let r=document.createElement(&#34;style&#34;);r.id=&#34;replit-beacon-crosshair&#34;,r.textContent=&#34;* { cursor: crosshair !important; }&#34;,document.head.appendChild(r)}break}case&#34;UPDATE_SELECTED_ELEMENT&#34;:{if(!this.selectedElement)return;let{attributes:r}=i;[this.selectedElement,...this.selectedSiblingElements].forEach(l=&gt;{r.style!==void 0&amp;&amp;(l.setAttribute(&#34;style&#34;,Cn(An(l),r.style)),l.setAttribute(&#34;data-replit-dirty&#34;,&#34;true&#34;)),r.textContent!==void 0&amp;&amp;(l.textContent=r.textContent,l.setAttribute(&#34;data-replit-dirty&#34;,&#34;true&#34;)),r.className!==void 0&amp;&amp;(l.className=r.className,l.setAttribute(&#34;data-replit-dirty&#34;,&#34;true&#34;)),r.src!==void 0&amp;&amp;(l.setAttribute(&#34;src&#34;,r.src),l.setAttribute(&#34;data-replit-dirty&#34;,&#34;true&#34;))}),this.updateHighlighterPosition(this.selectedElement,this.selectedHighlighter,this.selectedLabel),this.selectedSiblingElements.length&gt;0&amp;&amp;(this.clearHighlighters(this.selectedSiblingHighlighters),this.selectedSiblingHighlighters=[],this.selectedSiblingHighlighters=this.highlightElements(this.selectedSiblingElements));break}case&#34;CLEAR_ELEMENT_DIRTY&#34;:{let r=document.querySelectorAll(&#39;[data-replit-dirty=&#34;true&#34;]&#39;);for(let o of r)o.removeAttribute(&#34;data-replit-dirty&#34;),o.removeAttribute(&#34;data-original-text&#34;),o.removeAttribute(&#34;data-original-style&#34;),o.removeAttribute(&#34;data-original-src&#34;);break}case&#34;RESTORE_DIRTY_ELEMENTS&#34;:{this.restoreElements();break}case&#34;APPLY_THEME_PREVIEW&#34;:{this.handleApplyThemePreview(i);break}case&#34;CLEAR_THEME_PREVIEW&#34;:{this.handleClearThemePreview();break}case&#34;SCREENSHOT_PAGE&#34;:{this.handleScreenshotPage(i.requestId,i.capture);break}case&#34;RELAY_TO_IFRAME&#34;:{this.handleRelayToIframe(i.event);break}case&#34;REQUEST_CONTENT_HEIGHT&#34;:{this.handleContentHeightRequest(i.requestId);break}}};handleRelayToIframe(t){switch(t.kind){case&#34;cancel-interaction&#34;:{this.cancelInteraction();break}case&#34;set-canvas-gesture-relay&#34;:{this.isCanvasGestureRelayEnabled=t.enabled,this.dragStartPointer=null,this.dragRelayPointerId=null,this.scrollGestureState=&#34;idle&#34;,this.scrollGestureTimer&amp;&amp;(clearTimeout(this.scrollGestureTimer),this.scrollGestureTimer=null);break}case&#34;set-canvas-relay-context-menu&#34;:{this.isContextMenuRelayEnabled=t.enabled;break}}}cancelInteraction(){document.getSelection()?.removeAllRanges(),document.activeElement instanceof HTMLElement&amp;&amp;document.activeElement.blur()}handleApplyThemePreview(t){if(t.type!==&#34;APPLY_THEME_PREVIEW&#34;)return;let e=document.getElementById(y.THEME_PREVIEW_STYLE_ID);e||(e=document.createElement(&#34;style&#34;),e.id=y.THEME_PREVIEW_STYLE_ID,document.head.appendChild(e)),e.textContent=t.themeContent}handleClearThemePreview(){let t=document.getElementById(y.THEME_PREVIEW_STYLE_ID);t&amp;&amp;t.remove()}async handleScreenshotPage(t,e=&#34;page&#34;){try{let i=e===&#34;viewport&#34;?await Ue():await ee();this.postMessageToParent({type:&#34;SCREENSHOT_PAGE_RESULT&#34;,timestamp:Date.now(),requestId:t,screenshotBlob:i})}catch(i){console.error(&#34;[replit-cartographer] Error capturing page screenshot:&#34;,i),this.postMessageToParent({type:&#34;SCREENSHOT_PAGE_RESULT&#34;,timestamp:Date.now(),requestId:t,error:i instanceof Error?i.message:&#34;Unknown screenshot error&#34;})}}measureContentHeight(){return Nn()}handleContentHeightRequest(t){try{let e=this.measureContentHeight();this.postMessageToParent({type:&#34;CONTENT_HEIGHT_RESULT&#34;,timestamp:Date.now(),requestId:t,contentHeight:e})}catch(e){this.postMessageToParent({type:&#34;CONTENT_HEIGHT_RESULT&#34;,timestamp:Date.now(),requestId:t,error:e instanceof Error?e.message:&#34;Unknown content height error&#34;})}}handleVisualEditorToggle(t){if(t.type!==&#34;TOGGLE_REPLIT_VISUAL_EDITOR&#34;)return;let e=!!t.enabled,i=this.hoverMessages;this.enableEditing=!!t.enableEditing,this.hoverMessages=!!t.hoverMessages,e?(this.hoverMessages||window.dispatchEvent(new CustomEvent(&#34;replit-init-tailwind&#34;)),this.postMessageToParent({type:&#34;REPLIT_VISUAL_EDITOR_ENABLED&#34;,timestamp:Date.now(),hoverMessages:this.hoverMessages||void 0})):this.postMessageToParent({type:&#34;REPLIT_VISUAL_EDITOR_DISABLED&#34;,timestamp:Date.now()}),this.isActive!==e?(this.isActive=e,this.toggleEventListeners(e)):this.isActive&amp;&amp;e&amp;&amp;i!==this.hoverMessages&amp;&amp;(this.toggleEventListeners(!1),this.toggleEventListeners(!0))}observeSelectedElement(){if(this.selectedElement){if(!this.isPureTextElement(this.selectedElement)){this.mutationObserver&amp;&amp;(this.mutationObserver.disconnect(),this.mutationObserver=null);return}this.mutationObserver&amp;&amp;this.mutationObserver.disconnect(),this.mutationObserver=new MutationObserver(t=&gt;{if(t.some(i=&gt;i.type===&#34;characterData&#34;)&amp;&amp;this.selectedElement){this.selectedElement.setAttribute(&#34;data-replit-dirty&#34;,&#34;true&#34;);let i=J(this.selectedElement,this.nodeMap);this.postMessageToParent({type:&#34;ELEMENT_TEXT_CHANGED&#34;,payload:i,timestamp:Date.now()}),this.updateHighlighterPosition(this.selectedElement,this.selectedHighlighter,this.selectedLabel)}}),this.mutationObserver.observe(this.selectedElement,{characterData:!0,childList:!1,attributes:!1,subtree:!0})}}observeLightDarkModeSwitch(){let t=new MutationObserver(i=&gt;{i.forEach(r=&gt;{r.type===&#34;attributes&#34;&amp;&amp;r.attributeName===&#34;class&#34;&amp;&amp;(r.target.classList.contains(&#34;dark&#34;)?this.postMessageToParent({type:&#34;DARK_MODE_USED&#34;,timestamp:Date.now()}):this.postMessageToParent({type:&#34;LIGHT_MODE_USED&#34;,timestamp:Date.now()}))})}),e=document.documentElement;t.observe(e,{attributes:!0,attributeFilter:[&#34;class&#34;],childList:!1,subtree:!1})}recalculateSelectedElement=()=&gt;{if(this.isActive){if(this.hoverMessages){if(this.lastHighlightedElement&amp;&amp;this.lastHighlightedElement!==this.selectedElement){let t=this.lastHighlightedElement===document.body||this.lastHighlightedElement===document.documentElement?document.body:this.lastHighlightedElement,e=t.getBoundingClientRect();this.postMessageToParent({type:&#34;ELEMENT_HOVERED&#34;,timestamp:Date.now(),elementBounds:{x:e.x,y:e.y,width:e.width,height:e.height},elementName:x(t)})}return}this.selectedElement&amp;&amp;this.updateHighlighterPosition(this.selectedElement,this.selectedHighlighter,this.selectedLabel),this.lastHighlightedElement&amp;&amp;this.updateHighlighterPosition(this.lastHighlightedElement,this.hoverHighlighter,this.hoverLabel),this.selectedSiblingElements.length&gt;0&amp;&amp;this.updateSiblingHighlighterPositions()}};updateSiblingHighlighterPositions(){for(let t=0;t&lt;this.selectedSiblingHighlighters.length;t++){let e=this.selectedSiblingHighlighters[t],i=this.visibleSelectedSiblingElements[t];if(!e||!i)continue;let r=i.getBoundingClientRect(),o=window.innerHeight,l=Math.max(0,r.top),s=Math.min(o,r.bottom),c=Math.max(0,s-l);Object.assign(e.style,{opacity:c&gt;0?&#34;1&#34;:&#34;0&#34;,top:`${l}px`,left:`${r.left}px`,width:`${r.width}px`,height:`${c}px`})}}handleKeyDown=t=&gt;{if(this.isActive&amp;&amp;(t.key===&#34;Escape&#34;||t.key===&#34;Esc&#34;)){if(this.hoverMessages){if(this.selectedElement){if(this.clearSelection(),this.lastHighlightedElement=null,!document.getElementById(&#34;replit-beacon-crosshair&#34;)){let e=document.createElement(&#34;style&#34;);e.id=&#34;replit-beacon-crosshair&#34;,e.textContent=&#34;* { cursor: crosshair !important; }&#34;,document.head.appendChild(e)}this.postMessageToParent({type:&#34;ELEMENT_UNSELECTED&#34;,timestamp:Date.now()})}else this.handleVisualEditorToggle({type:&#34;TOGGLE_REPLIT_VISUAL_EDITOR&#34;,enabled:!1,timestamp:Date.now()});return}this.handleVisualEditorToggle({type:&#34;TOGGLE_REPLIT_VISUAL_EDITOR&#34;,enabled:!1,timestamp:Date.now()})}};toggleEventListeners(t){if(t){if(this.hoverMessages){let e=document.createElement(&#34;style&#34;);e.id=&#34;replit-beacon-crosshair&#34;,e.textContent=&#34;* { cursor: crosshair !important; }&#34;,document.head.appendChild(e)}else this.initializeHighlighter();this.enableDisabledElements(),document.addEventListener(&#34;mousemove&#34;,this.handleMouseMove),document.addEventListener(&#34;mouseleave&#34;,this.handleMouseLeave),document.addEventListener(&#34;click&#34;,this.handleClick,!0),document.addEventListener(&#34;keydown&#34;,this.handleKeyDown),this.throttledRecalculate&amp;&amp;(window.addEventListener(&#34;resize&#34;,this.throttledRecalculate),window.addEventListener(&#34;scroll&#34;,this.throttledRecalculate,!0))}else document.getElementById(&#34;replit-beacon-crosshair&#34;)?.remove(),this.restoreDisabledElements(),this.restoreElements(),document.removeEventListener(&#34;mousemove&#34;,this.handleMouseMove),document.removeEventListener(&#34;click&#34;,this.handleClick,!0),document.removeEventListener(&#34;mouseleave&#34;,this.handleMouseLeave),document.removeEventListener(&#34;keydown&#34;,this.handleKeyDown),this.throttledRecalculate&amp;&amp;(window.removeEventListener(&#34;resize&#34;,this.throttledRecalculate),window.removeEventListener(&#34;scroll&#34;,this.throttledRecalculate,!0)),this.mutationObserver&amp;&amp;(this.mutationObserver.disconnect(),this.mutationObserver=null),this.selectedElement&amp;&amp;(this.selectedElement.removeAttribute(&#34;contenteditable&#34;),this.selectedElement.removeAttribute(&#34;data-original-text&#34;),document.querySelectorAll(&#39;[contenteditable=&#34;plaintext-only&#34;]&#39;).forEach(e=&gt;{e.removeAttribute(&#34;contenteditable&#34;)})),this.clearSelectedSiblingHighlighters(),this.clearHoverSiblingHighlighters(),this.hoverHighlighter?.remove(),this.hoverLabel?.remove(),this.selectedHighlighter?.remove(),this.selectedLabel?.remove(),this.shadowHost?.remove(),this.hoverHighlighter=null,this.hoverLabel=null,this.selectedHighlighter=null,this.selectedLabel=null,this.shadowHost=null,this.shadowRoot=null,this.selectedElement=null}clearHighlighters(t){return t.forEach(e=&gt;{e.remove()}),[]}clearHoverSiblingHighlighters(){this.hoverSiblingHighlighters=this.clearHighlighters(this.hoverSiblingHighlighters)}clearSelectedSiblingHighlighters(){this.selectedSiblingElements.forEach(t=&gt;{t.removeAttribute(&#34;contenteditable&#34;)}),this.selectedSiblingElements=[],this.visibleSelectedSiblingElements=[],this.selectedSiblingHighlighters=this.clearHighlighters(this.selectedSiblingHighlighters)}highlightElements(t){if(!this.shadowRoot||t.length===0)return[];let e=[];return t.forEach(i=&gt;{let r=document.createElement(&#34;div&#34;);r.className=&#34;beacon-highlighter beacon-sibling-highlighter&#34;,this.shadowRoot?.appendChild(r),e.push(r);let o=i.getBoundingClientRect(),l=window.innerHeight,s=Math.max(0,o.top),c=Math.min(l,o.bottom),h=Math.max(0,c-s);Object.assign(r.style,{opacity:h&gt;0?&#34;1&#34;:&#34;0&#34;,top:`${s}px`,left:`${o.left}px`,width:`${o.width}px`,height:`${h}px`})}),e}highlightHoverSiblings(t){this.clearHoverSiblingHighlighters();let e=D(t,y.MAX_SIBLING_HIGHLIGHTERS,!0);this.hoverSiblingHighlighters=this.highlightElements(e)}highlightSelectedSiblings(t){this.clearSelectedSiblingHighlighters();let e=D(t),i=e.filter(r=&gt;te(r));this.selectedSiblingElements=e,this.visibleSelectedSiblingElements=i,this.selectedSiblingHighlighters=this.highlightElements(i)}enableDisabledElements(){document.querySelectorAll(&#34;button[disabled], input[disabled]&#34;).forEach(t=&gt;{t.removeAttribute(&#34;disabled&#34;),t.setAttribute(&#34;data-replit-disabled&#34;,&#34;&#34;)})}restoreDisabledElements(){document.querySelectorAll(&#34;[data-replit-disabled]&#34;).forEach(t=&gt;{t.removeAttribute(&#34;data-replit-disabled&#34;),t.setAttribute(&#34;disabled&#34;,&#34;&#34;)})}};function ne(n){return n.includes(&#34;standalone&#34;)?&#34;standalone&#34;:&#34;installed&#34;}function ie({currentVersion:n,existingVersion:t,existingCoexistenceStandaloneVersion:e}){let i=ne(n);if(!t)return{options:{source:i,acceptsRawMessages:!0},globalVersion:n,coexistenceStandaloneVersion:null};let r=ne(t);return i===&#34;standalone&#34;&amp;&amp;r===&#34;installed&#34;?e?{options:null,globalVersion:null,coexistenceStandaloneVersion:null}:{options:{source:&#34;standalone&#34;,acceptsRawMessages:!1,installedVersion:t},globalVersion:null,coexistenceStandaloneVersion:n}:{options:null,globalVersion:null,coexistenceStandaloneVersion:null}}if(typeof window&lt;&#34;u&#34;)try{let n=ie({currentVersion:B,existingVersion:window.REPLIT_BEACON_VERSION,existingCoexistenceStandaloneVersion:window.REPLIT_BEACON_COEXISTENCE_STANDALONE_VERSION});n.options&amp;&amp;new N(n.options),n.globalVersion&amp;&amp;(window.REPLIT_BEACON_VERSION=n.globalVersion),n.coexistenceStandaloneVersion&amp;&amp;(window.REPLIT_BEACON_COEXISTENCE_STANDALONE_VERSION=n.coexistenceStandaloneVersion)}catch(n){console.error(&#34;[replit-beacon] Failed to initialize:&#34;,n)}})();
-    </script>
-    <script>
-      (function() {
-  var initialized = false;
-
-  function loadTailwind() {
-    if (initialized) { return; }
-    initialized = true;
-
-        var script = document.createElement(&#39;script&#39;);
-        script.src = &#34;https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4.1.14&#34;;
-
-        if (window.REPLIT_APP_TAILWIND_CONFIG) {
-          script.setAttribute(&#39;data-config&#39;, JSON.stringify(window.REPLIT_APP_TAILWIND_CONFIG));
-        }
-
-        document.head.appendChild(script);
+  .radio-card.selected .radio-dot::after { opacity: 1; }
+  .radio-label {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text);
   }
 
-  // Listen for the beacon requesting tailwind initialization.
-  window.addEventListener(&#39;replit-init-tailwind&#39;, function() {
-    if (window.REPLIT_APP_TAILWIND_CONFIG) {
-      loadTailwind();
-    } else {
-      // Config not ready yet — wait for the config-ready event, but proceed
-      // without a config after 1 second.  The config is optional (projects
-      // without a tailwind config file will never fire the ready event).
-      var configTimeout = setTimeout(function() { loadTailwind(); }, 1000);
-      window.addEventListener(&#39;replit-tailwind-config-ready&#39;, function() {
-        clearTimeout(configTimeout);
-        loadTailwind();
-      }, { once: true });
+  /* ── Number / Time inputs ── */
+  .input-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .input-label { font-size: .9rem; color: var(--muted); }
+  .q-input {
+    width: 100%;
+    max-width: 280px;
+    text-align: center;
+    font-size: 2.2rem;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 700;
+    padding: 18px 20px;
+    background: var(--card2);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    color: var(--text);
+    outline: none;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .q-input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(124,143,245,.15);
+  }
+  input[type="time"]::-webkit-calendar-picker-indicator { filter: invert(1); }
+
+  /* ── Grid Question (Q5b-j, Q10) ── */
+  .grid-q-title {
+    font-size: .97rem;
+    color: var(--muted);
+    margin-bottom: 16px;
+    line-height: 1.7;
+  }
+  .grid-table { width: 100%; border-collapse: collapse; }
+  /* Desktop: real table layout */
+  .grid-thead th {
+    font-size: .72rem;
+    font-weight: 600;
+    color: var(--muted);
+    padding: 6px 8px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .grid-thead th:first-child { text-align: right; }
+  .grid-row td {
+    padding: 10px 8px;
+    border-bottom: 1px solid rgba(99,120,200,.1);
+    vertical-align: middle;
+  }
+  .grid-row td:first-child {
+    font-size: .93rem;
+    color: var(--text);
+    padding-right: 0;
+  }
+  .grid-cell { text-align: center; }
+  .grid-radio {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    border: 2px solid var(--muted);
+    display: inline-flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: border-color .2s, background .2s;
+    margin: 0 auto;
+  }
+  .grid-radio.sel { border-color: var(--primary); background: var(--primary); }
+  .grid-radio.sel::after {
+    content: '';
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: white;
+    display: block;
+  }
+
+  /* Mobile: collapse grid to cards */
+  @media (max-width: 600px) {
+    .grid-thead { display: none; }
+    .grid-row { display: block; background: var(--card2); border-radius: 12px; margin-bottom: 10px; padding: 12px; }
+    .grid-row td { display: block; padding: 4px 0; border-bottom: none; }
+    .grid-row td:first-child { font-size: .95rem; margin-bottom: 8px; font-weight: 600; }
+    .grid-cell { text-align: right; }
+    .mobile-opts { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+    .mobile-opt {
+      flex: 1; min-width: 120px;
+      padding: 8px 10px;
+      background: var(--card);
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      font-size: .8rem;
+      text-align: center;
+      cursor: pointer;
+      color: var(--muted);
+      transition: border-color .2s, color .2s;
     }
-  });
-})();
-    </script>
-    <script>
-      window.REPLIT_APP_THEME_TOKENS = {&#34;color&#34;:[{&#34;suffix&#34;:&#34;background&#34;,&#34;expr&#34;:&#34;hsl(var(--background))&#34;},{&#34;suffix&#34;:&#34;foreground&#34;,&#34;expr&#34;:&#34;hsl(var(--foreground))&#34;},{&#34;suffix&#34;:&#34;border&#34;,&#34;expr&#34;:&#34;hsl(var(--border))&#34;},{&#34;suffix&#34;:&#34;input&#34;,&#34;expr&#34;:&#34;hsl(var(--input))&#34;},{&#34;suffix&#34;:&#34;ring&#34;,&#34;expr&#34;:&#34;hsl(var(--ring))&#34;},{&#34;suffix&#34;:&#34;card&#34;,&#34;expr&#34;:&#34;hsl(var(--card))&#34;},{&#34;suffix&#34;:&#34;card-foreground&#34;,&#34;expr&#34;:&#34;hsl(var(--card-foreground))&#34;},{&#34;suffix&#34;:&#34;card-border&#34;,&#34;expr&#34;:&#34;hsl(var(--card-border))&#34;},{&#34;suffix&#34;:&#34;popover&#34;,&#34;expr&#34;:&#34;hsl(var(--popover))&#34;},{&#34;suffix&#34;:&#34;popover-foreground&#34;,&#34;expr&#34;:&#34;hsl(var(--popover-foreground))&#34;},{&#34;suffix&#34;:&#34;popover-border&#34;,&#34;expr&#34;:&#34;hsl(var(--popover-border))&#34;},{&#34;suffix&#34;:&#34;primary&#34;,&#34;expr&#34;:&#34;hsl(var(--primary))&#34;},{&#34;suffix&#34;:&#34;primary-foreground&#34;,&#34;expr&#34;:&#34;hsl(var(--primary-foreground))&#34;},{&#34;suffix&#34;:&#34;secondary&#34;,&#34;expr&#34;:&#34;hsl(var(--secondary))&#34;},{&#34;suffix&#34;:&#34;secondary-foreground&#34;,&#34;expr&#34;:&#34;hsl(var(--secondary-foreground))&#34;},{&#34;suffix&#34;:&#34;muted&#34;,&#34;expr&#34;:&#34;hsl(var(--muted))&#34;},{&#34;suffix&#34;:&#34;muted-foreground&#34;,&#34;expr&#34;:&#34;hsl(var(--muted-foreground))&#34;},{&#34;suffix&#34;:&#34;accent&#34;,&#34;expr&#34;:&#34;hsl(var(--accent))&#34;},{&#34;suffix&#34;:&#34;accent-foreground&#34;,&#34;expr&#34;:&#34;hsl(var(--accent-foreground))&#34;},{&#34;suffix&#34;:&#34;destructive&#34;,&#34;expr&#34;:&#34;hsl(var(--destructive))&#34;},{&#34;suffix&#34;:&#34;destructive-foreground&#34;,&#34;expr&#34;:&#34;hsl(var(--destructive-foreground))&#34;}],&#34;font&#34;:[{&#34;suffix&#34;:&#34;sans&#34;,&#34;expr&#34;:&#34;var(--app-font-sans)&#34;},{&#34;suffix&#34;:&#34;serif&#34;,&#34;expr&#34;:&#34;var(--app-font-serif)&#34;},{&#34;suffix&#34;:&#34;mono&#34;,&#34;expr&#34;:&#34;var(--app-font-mono)&#34;}],&#34;radius&#34;:[{&#34;suffix&#34;:&#34;sm&#34;,&#34;expr&#34;:&#34;calc(var(--radius) - 4px)&#34;},{&#34;suffix&#34;:&#34;md&#34;,&#34;expr&#34;:&#34;calc(var(--radius) - 2px)&#34;},{&#34;suffix&#34;:&#34;lg&#34;,&#34;expr&#34;:&#34;var(--radius)&#34;},{&#34;suffix&#34;:&#34;xl&#34;,&#34;expr&#34;:&#34;calc(var(--radius) + 4px)&#34;}]};
-    </script>
-    <script type="text/javascript" src="/@replit/vite-plugin-dev-banner/banner-script.js" id="replit-dev-banner">
-    </script>
-  </head>
-  <body>
-    <div id="root">
+    .mobile-opt.sel { border-color: var(--primary); color: var(--text); background: rgba(124,143,245,.12); }
+  }
+  @media (min-width: 601px) {
+    .mobile-opts { display: none; }
+  }
+
+  /* ── Nav buttons ── */
+  .nav-row {
+    width: 100%; max-width: 680px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0 28px;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+  .btn-nav {
+    padding: 12px 28px;
+    border-radius: 50px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all .2s;
+  }
+  .btn-prev {
+    background: transparent;
+    border-color: var(--border);
+    color: var(--muted);
+  }
+  .btn-prev:hover { background: var(--card2); color: var(--text); }
+  .btn-prev:disabled { opacity: 0; pointer-events: none; }
+  .btn-next {
+    background: linear-gradient(135deg, var(--primary), var(--primary2));
+    color: white;
+    box-shadow: 0 4px 20px rgba(124,143,245,.3);
+  }
+  .btn-next:hover:not(:disabled) { transform: scale(1.04); box-shadow: 0 4px 30px rgba(124,143,245,.5); }
+  .btn-next:active:not(:disabled) { transform: scale(.98); }
+  .btn-next:disabled { opacity: .45; cursor: not-allowed; }
+  .btn-skip {
+    background: transparent;
+    border-color: var(--border);
+    color: var(--muted);
+    font-size: .9rem;
+  }
+  .btn-skip:hover { background: var(--card2); }
+
+  /* ── Results ── */
+  #results { justify-content: flex-start; gap: 32px; }
+  .results-inner { width: 100%; max-width: 680px; display: flex; flex-direction: column; gap: 28px; padding-bottom: 48px; }
+  .res-header { text-align: center; }
+  .res-title {
+    font-family: 'Cairo', sans-serif;
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    font-weight: 900;
+    margin-bottom: 24px;
+  }
+  .score-circle-wrap { display: flex; justify-content: center; position: relative; }
+  .score-glow {
+    position: absolute; inset: -30px;
+    background: radial-gradient(circle, rgba(124,143,245,.25) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .score-circle {
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: var(--card);
+    border: 2px solid var(--border);
+    box-shadow: 0 12px 48px rgba(0,0,0,.4);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    position: relative; z-index: 1;
+  }
+  .score-num {
+    font-family: 'Cairo', sans-serif;
+    font-size: 4rem;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--text);
+  }
+  .score-denom {
+    font-size: 1.1rem;
+    color: var(--muted);
+    border-top: 1.5px solid var(--border);
+    padding-top: 4px;
+    margin-top: 4px;
+    width: 60px;
+    text-align: center;
+  }
+  .interp-badge {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 12px 24px;
+    border-radius: 50px;
+    border: 2px solid;
+    font-family: 'Cairo', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-top: 20px;
+  }
+  .badge-good  { border-color: rgba(52,211,153,.4); color: var(--emerald); background: rgba(52,211,153,.08); }
+  .badge-poor  { border-color: rgba(248,113,113,.4); color: var(--rose);   background: rgba(248,113,113,.08); }
+
+  .components-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  @media (max-width: 520px) { .components-grid { grid-template-columns: 1fr; } }
+
+  .comp-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    animation: fadeUp .4s ease both;
+  }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:none; } }
+  .comp-card:nth-child(1){animation-delay:.05s}
+  .comp-card:nth-child(2){animation-delay:.1s}
+  .comp-card:nth-child(3){animation-delay:.15s}
+  .comp-card:nth-child(4){animation-delay:.2s}
+  .comp-card:nth-child(5){animation-delay:.25s}
+  .comp-card:nth-child(6){animation-delay:.3s}
+  .comp-card:nth-child(7){animation-delay:.35s}
+
+  .comp-label { font-size: .92rem; font-weight: 600; color: var(--text); }
+  .comp-extra  { font-size: .78rem; color: var(--muted); margin-top: 2px; }
+  .comp-score-wrap { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
+  .comp-score {
+    font-family: 'Cairo', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--primary);
+    line-height: 1;
+  }
+  .score-bar { display: flex; gap: 4px; }
+  .bar-seg {
+    width: 14px; height: 5px;
+    border-radius: 3px;
+    background: var(--card2);
+    transition: background .3s;
+  }
+  .bar-seg.lit-0 { background: var(--emerald); }
+  .bar-seg.lit-1 { background: var(--primary); }
+  .bar-seg.lit-2 { background: var(--amber); }
+  .bar-seg.lit-3 { background: var(--rose); }
+
+  .res-note {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 20px;
+    font-size: .9rem;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+  .res-note strong { color: var(--text); }
+
+  .btn-restart {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    padding: 14px 36px;
+    background: var(--card2);
+    border: 2px solid var(--border);
+    border-radius: 50px;
+    font-family: 'Cairo', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    cursor: pointer;
+    transition: all .2s;
+    margin: 0 auto;
+    width: fit-content;
+  }
+  .btn-restart:hover { border-color: var(--primary); background: rgba(124,143,245,.1); transform: scale(1.03); }
+  .btn-restart svg { width: 18px; height: 18px; }
+
+  /* slide transition */
+  .slide-enter { animation: slideIn .32s cubic-bezier(.4,0,.2,1) both; }
+  .slide-exit  { animation: slideOut .32s cubic-bezier(.4,0,.2,1) both; }
+  @keyframes slideIn  { from { opacity:0; transform:translateX(-60px); } to { opacity:1; transform:none; } }
+  @keyframes slideOut { from { opacity:1; transform:none; } to { opacity:0; transform:translateX(60px); } }
+  .slide-enter-back { animation: slideInBack .32s cubic-bezier(.4,0,.2,1) both; }
+  @keyframes slideInBack { from { opacity:0; transform:translateX(60px); } to { opacity:1; transform:none; } }
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- ═══════════ WELCOME ═══════════ -->
+<section class="screen active" id="welcome">
+  <div class="moon-wrap">
+    <div class="moon-glow"></div>
+    <div class="moon-circle">
+      <div class="star-dot" style="width:4px;height:4px;top:16px;right:24px;opacity:.7"></div>
+      <div class="star-dot" style="width:6px;height:6px;top:36px;left:18px;opacity:.5"></div>
+      <div class="star-dot" style="width:3px;height:3px;bottom:22px;right:30px;opacity:.6"></div>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
     </div>
-    <script type="module" src="/src/main.tsx">
-    </script>
-    <script src="https://replit-cdn.com/replit-pill/replit-pill.global.js" data-repl-id="fc638f20-8aac-42dd-8d22-8338f018bb8c">
-    </script>
-  </body>
+  </div>
+  <h1 class="welcome-title">صحة الطالب</h1>
+  <p class="welcome-sub">قياس جودة النوم | مؤشر بيتسبرغ (PSQI)</p>
+  <p class="welcome-desc">
+    الأسئلة التالية تتعلق بعادات نومك المعتادة خلال الشهر الماضي فقط.
+    يجب أن تعكس إجاباتك الحالة الأكثر دقة خلال معظم الأيام والليالي في الشهر الماضي.
+  </p>
+  <button class="btn-start" onclick="startQuiz()">ابدأ الاستبيان</button>
+</section>
+
+<!-- ═══════════ QUIZ ═══════════ -->
+<section class="screen" id="quiz">
+  <div class="progress-wrap">
+    <div class="progress-header">
+      <span id="prog-text">السؤال 1 من 11</span>
+      <span id="prog-pct">9%</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="prog-fill" style="width:9%"></div></div>
+  </div>
+
+  <div class="q-wrap" id="q-wrap">
+    <!-- rendered by JS -->
+  </div>
+
+  <div class="nav-row">
+    <button class="btn-nav btn-prev" id="btn-prev" onclick="prevStep()">السابق</button>
+    <div style="display:flex;gap:10px;align-items:center">
+      <button class="btn-nav btn-skip" id="btn-skip" onclick="skipStep()" style="display:none">تخطي هذا السؤال</button>
+      <button class="btn-nav btn-next" id="btn-next" onclick="nextStep()">التالي</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ RESULTS ═══════════ -->
+<section class="screen" id="results">
+  <div class="results-inner" id="results-inner">
+    <!-- rendered by JS -->
+  </div>
+</section>
+
+</div>
+
+<script>
+// ═══════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════
+const TOTAL = 11;
+let step = 1;
+let goingForward = true;
+
+const ans = {
+  q1: '', q2: null, q3: '', q4: null,
+  q5a: null, q5b: null, q5c: null, q5d: null, q5e: null,
+  q5f: null, q5g: null, q5h: null, q5i: null, q5j: null,
+  q6: null, q7: null, q8: null, q9: null,
+  q10a: null, q10b: null, q10c: null, q10d: null, q10e: null,
+};
+
+const FREQ = [
+  { v:0, l:'ليس خلال الشهر الماضي' },
+  { v:1, l:'أقل من مرة أسبوعيًا' },
+  { v:2, l:'مرة أو مرتين أسبوعيًا' },
+  { v:3, l:'ثلاث مرات أو أكثر أسبوعيًا' },
+];
+
+// ═══════════════════════════════════════
+//  NAVIGATION
+// ═══════════════════════════════════════
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function startQuiz() {
+  step = 1;
+  showScreen('quiz');
+  renderStep(true);
+}
+
+function nextStep() {
+  if (isDisabled()) return;
+  if (step < TOTAL) {
+    goingForward = true;
+    step++;
+    renderStep(true);
+  } else {
+    showResults();
+  }
+}
+
+function prevStep() {
+  if (step > 1) {
+    goingForward = false;
+    step--;
+    renderStep(false);
+  }
+}
+
+function skipStep() {
+  showResults();
+}
+
+function updateNav() {
+  document.getElementById('btn-prev').disabled = (step === 1);
+  document.getElementById('btn-next').disabled = isDisabled();
+  document.getElementById('btn-next').textContent = step === TOTAL ? 'إظهار النتائج' : 'التالي';
+  document.getElementById('btn-skip').style.display = step === TOTAL ? 'inline-block' : 'none';
+  const pct = Math.round((step / TOTAL) * 100);
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-text').textContent = `السؤال ${step} من ${TOTAL}`;
+  document.getElementById('prog-pct').textContent = pct + '%';
+}
+
+function isDisabled() {
+  switch(step) {
+    case 1: return !ans.q1;
+    case 2: return ans.q2 === null || ans.q2 === '';
+    case 3: return !ans.q3;
+    case 4: return ans.q4 === null || ans.q4 === '';
+    case 5: return ans.q5a === null;
+    case 6: return [ans.q5b,ans.q5c,ans.q5d,ans.q5e,ans.q5f,ans.q5g,ans.q5h,ans.q5i,ans.q5j].some(v=>v===null);
+    case 7: return ans.q6 === null;
+    case 8: return ans.q7 === null;
+    case 9: return ans.q8 === null;
+    case 10: return ans.q9 === null;
+    case 11: return false;
+    default: return false;
+  }
+}
+
+// ═══════════════════════════════════════
+//  RENDER HELPERS
+// ═══════════════════════════════════════
+function card(title, sub, body, num) {
+  return `
+    <div class="q-card">
+      ${num ? `<div class="q-num">السؤال ${num}</div>` : ''}
+      <h2 class="q-title">${title}</h2>
+      ${sub ? `<p class="q-sub">${sub}</p>` : ''}
+      ${body}
+    </div>`;
+}
+
+function radioOpts(options, key) {
+  return '<div class="radio-options">' + options.map(o => `
+    <div class="radio-card ${ans[key]===o.v?'selected':''}" onclick="pick('${key}',${o.v})">
+      <div class="radio-dot"></div>
+      <span class="radio-label">${o.l}</span>
+    </div>`).join('') + '</div>';
+}
+
+function pick(key, val) {
+  ans[key] = val;
+  renderStep(goingForward, true); // re-render same step (no animation)
+}
+
+function inputNum(key, placeholder, step_attr, max) {
+  return `<div class="input-wrap">
+    <label class="input-label">أدخل العدد</label>
+    <input class="q-input" type="number" min="0" max="${max}" step="${step_attr}"
+      placeholder="${placeholder}" value="${ans[key]!==null?ans[key]:''}"
+      oninput="ans['${key}']=this.value===''?null:Number(this.value);updateNav()" />
+  </div>`;
+}
+
+function inputTime(key) {
+  return `<div class="input-wrap">
+    <input class="q-input" type="time" value="${ans[key]}"
+      oninput="ans['${key}']=this.value;updateNav()" style="max-width:220px;font-size:2.5rem;" />
+  </div>`;
+}
+
+function gridQ(title, items, keys) {
+  const cols = FREQ.map(f=>`<th>${f.l}</th>`).join('');
+  const desktopRows = items.map((item, i) => {
+    const k = keys[i];
+    const cells = FREQ.map(f => `
+      <td class="grid-cell">
+        <div class="grid-radio ${ans[k]===f.v?'sel':''}" onclick="pick('${k}',${f.v})"></div>
+      </td>`).join('');
+    return `<tr class="grid-row"><td>${item}</td>${cells}</tr>`;
+  }).join('');
+
+  const mobileCards = items.map((item, i) => {
+    const k = keys[i];
+    const opts = FREQ.map(f => `
+      <div class="mobile-opt ${ans[k]===f.v?'sel':''}" onclick="pick('${k}',${f.v})">${f.l}</div>`).join('');
+    return `<tr class="grid-row">
+      <td>${item}</td>
+      <td><div class="mobile-opts">${opts}</div></td>
+    </tr>`;
+  }).join('');
+
+  return `<p class="grid-q-title">${title}</p>
+    <div style="overflow-x:auto">
+    <table class="grid-table">
+      <thead class="grid-thead"><tr><th>السبب</th>${cols}</tr></thead>
+      <tbody>${desktopRows}${mobileCards}</tbody>
+    </table></div>`;
+}
+
+// ═══════════════════════════════════════
+//  STEP RENDERERS
+// ═══════════════════════════════════════
+function renderStep(forward, noAnim) {
+  updateNav();
+  const wrap = document.getElementById('q-wrap');
+
+  const html = getStepHTML();
+
+  if (noAnim) {
+    wrap.innerHTML = html;
+    return;
+  }
+  const cls = forward ? 'slide-enter' : 'slide-enter-back';
+  wrap.innerHTML = `<div class="${cls}">${html}</div>`;
+}
+
+function getStepHTML() {
+  switch(step) {
+    case 1: return card('وقت النوم',
+      'خلال الشهر الماضي، في أي وقت كنت تذهب عادةً إلى السرير ليلًا؟',
+      inputTime('q1'), 1);
+
+    case 2: return card('الاستغراق في النوم',
+      'خلال الشهر الماضي، كم من الوقت (بالدقائق) كنت تحتاج عادةً حتى تغفو كل ليلة؟',
+      inputNum('q2','30','1','300'), 2);
+
+    case 3: return card('وقت الاستيقاظ',
+      'خلال الشهر الماضي، في أي وقت كنت تستيقظ عادةً في الصباح؟',
+      inputTime('q3'), 3);
+
+    case 4: return card('ساعات النوم الفعلية',
+      'خلال الشهر الماضي، كم عدد ساعات النوم الفعلية التي حصلت عليها ليلًا؟',
+      `<p class="q-note">(قد يختلف ذلك عن عدد الساعات التي قضيتها في السرير)</p>` +
+      inputNum('q4','7','0.5','24'), 4);
+
+    case 5: return card('اضطرابات النوم',
+      'خلال الشهر الماضي، كم مرة واجهت صعوبة في النوم بسبب أنك لا تستطيع النوم خلال 30 دقيقة؟',
+      radioOpts(FREQ,'q5a'), 5);
+
+    case 6: return card('أسباب اضطرابات النوم', null,
+      gridQ('خلال الشهر الماضي، كم مرة واجهت صعوبة في النوم بسبب:', [
+        'تستيقظ في منتصف الليل أو في الصباح الباكر',
+        'تحتاج إلى النهوض لاستخدام الحمام',
+        'لا تستطيع التنفس بشكل مريح',
+        'تسعل أو تشخر بصوت مرتفع',
+        'تشعر بالبرد الشديد',
+        'تشعر بالحر الشديد',
+        'تراودك أحلام سيئة (كوابيس)',
+        'تشعر بالألم',
+        'سبب آخر',
+      ], ['q5b','q5c','q5d','q5e','q5f','q5g','q5h','q5i','q5j']), 6);
+
+    case 7: return card('جودة النوم العامة',
+      'خلال الشهر الماضي، كيف تقيّم جودة نومك بشكل عام؟',
+      radioOpts([
+        {v:0,l:'جيدة جدًا'},{v:1,l:'جيدة إلى حد ما'},
+        {v:2,l:'سيئة إلى حد ما'},{v:3,l:'سيئة جدًا'},
+      ],'q6'), 7);
+
+    case 8: return card('أدوية النوم',
+      'خلال الشهر الماضي، كم مرة تناولت أدوية للمساعدة على النوم؟',
+      `<p class="q-note">(سواء بوصفة طبية أو أدوية تُباع دون وصفة)</p>` +
+      radioOpts(FREQ,'q7'), 8);
+
+    case 9: return card('صعوبة البقاء مستيقظًا',
+      'خلال الشهر الماضي، كم مرة واجهت صعوبة في البقاء مستيقظًا أثناء القيادة أو تناول الوجبات أو المشاركة في نشاط اجتماعي؟',
+      radioOpts([
+        {v:0,l:'أبدًا'},{v:1,l:'مرة أو مرتين'},
+        {v:2,l:'مرة أو مرتين أسبوعيًا'},{v:3,l:'ثلاث مرات أو أكثر أسبوعيًا'},
+      ],'q8'), 9);
+
+    case 10: return card('الحماس والنشاط',
+      'خلال الشهر الماضي، إلى أي درجة شكّل نقص الحماس لإنجاز الأمور مشكلة لديك؟',
+      radioOpts([
+        {v:0,l:'لا توجد مشكلة إطلاقًا'},{v:1,l:'مشكلة بسيطة جدًا'},
+        {v:2,l:'مشكلة إلى حد ما'},{v:3,l:'مشكلة كبيرة جدًا'},
+      ],'q9'), 10);
+
+    case 11: return card('شريك النوم (اختياري)',
+      'إذا كان لديك شريك نوم أو شخص يشاركك الغرفة، اسأله عن المرات التي لاحظ فيها:',
+      `<p class="q-note">(هذا السؤال اختياري ولا يؤثر على حساب الدرجة)</p>` +
+      gridQ('ملاحظات الشريك حول نومك:', [
+        'شخير بصوت مرتفع',
+        'توقفات طويلة في التنفس أثناء النوم',
+        'حركة أو ارتعاش الساقين أثناء النوم',
+        'نوبات من الارتباك أو التشوش أثناء النوم',
+        'نوع آخر من القلق أو عدم الراحة أثناء النوم',
+      ], ['q10a','q10b','q10c','q10d','q10e']), 11);
+  }
+}
+
+// ═══════════════════════════════════════
+//  SCORING
+// ═══════════════════════════════════════
+function score() {
+  // C1
+  const c1 = ans.q6 ?? 0;
+
+  // C2
+  const q2 = ans.q2 ?? 0;
+  let q2s = q2<=15?0:q2<=30?1:q2<=60?2:3;
+  const q5as = ans.q5a ?? 0;
+  const c2sum = q2s + q5as;
+  const c2 = c2sum===0?0:c2sum<=2?1:c2sum<=4?2:3;
+
+  // C3
+  const q4 = ans.q4 ?? 0;
+  const c3 = q4>7?0:q4>=6?1:q4>=5?2:3;
+
+  // C4
+  let effPct = 0, c4 = 0;
+  if (ans.q1 && ans.q3 && q4 > 0) {
+    const [bh,bm] = ans.q1.split(':').map(Number);
+    const [wh,wm] = ans.q3.split(':').map(Number);
+    let bed  = new Date(); bed.setHours(bh,bm,0,0);
+    let wake = new Date(); wake.setHours(wh,wm,0,0);
+    if (wake <= bed) wake.setDate(wake.getDate()+1);
+    const tib = (wake - bed) / 3600000;
+    effPct = (q4 / tib) * 100;
+    c4 = effPct>85?0:effPct>=75?1:effPct>=65?2:3;
+  }
+
+  // C5
+  const distSum = ['q5b','q5c','q5d','q5e','q5f','q5g','q5h','q5i','q5j']
+    .reduce((s,k)=>s+(ans[k]??0), 0);
+  const c5 = distSum===0?0:distSum<=9?1:distSum<=18?2:3;
+
+  // C6
+  const c6 = ans.q7 ?? 0;
+
+  // C7
+  const c7sum = (ans.q8??0) + (ans.q9??0);
+  const c7 = c7sum===0?0:c7sum<=2?1:c7sum<=4?2:3;
+
+  return { global: c1+c2+c3+c4+c5+c6+c7, c1,c2,c3,c4,c5,c6,c7, effPct };
+}
+
+// ═══════════════════════════════════════
+//  RESULTS RENDER
+// ═══════════════════════════════════════
+function showResults() {
+  const r = score();
+  const good = r.global <= 5;
+
+  const comps = [
+    { l:'جودة النوم الذاتية',        s:r.c1 },
+    { l:'مدة الاستغراق حتى النوم',   s:r.c2 },
+    { l:'مدة النوم',                  s:r.c3 },
+    { l:'كفاءة النوم المعتادة',      s:r.c4, ex: r.effPct>0?`كفاءة النوم: ${Math.round(r.effPct)}%`:null },
+    { l:'اضطرابات النوم',             s:r.c5 },
+    { l:'استخدام أدوية النوم',        s:r.c6 },
+    { l:'اضطرابات الأداء النهاري',    s:r.c7 },
+  ];
+
+  const compCards = comps.map(c => {
+    const bars = [0,1,2,3].map(i => {
+      const lit = i <= c.s;
+      const cls = lit ? `lit-${c.s}` : '';
+      return `<div class="bar-seg ${cls}"></div>`;
+    }).join('');
+    return `<div class="comp-card">
+      <div>
+        <div class="comp-label">${c.l}</div>
+        ${c.ex ? `<div class="comp-extra">${c.ex}</div>` : ''}
+      </div>
+      <div class="comp-score-wrap">
+        <div class="comp-score">${c.s}</div>
+        <div class="score-bar">${bars}</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  const interp = good
+    ? `<div class="interp-badge badge-good">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        جودة نوم جيدة
+       </div>`
+    : `<div class="interp-badge badge-poor">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        يوجد اضطراب في جودة النوم
+       </div>`;
+
+  const note = good
+    ? `<strong>درجتك تشير إلى جودة نوم جيدة بشكل عام.</strong> استمر في الحفاظ على عادات نوم صحية.`
+    : `<strong>درجتك تشير إلى وجود ضعف في جودة النوم.</strong> يُنصح باستشارة طبيب أو متخصص في طب النوم إذا استمرت هذه الأعراض.`;
+
+  document.getElementById('results-inner').innerHTML = `
+    <div class="res-header">
+      <h1 class="res-title">نتائج مقياس جودة النوم</h1>
+      <div class="score-circle-wrap">
+        <div class="score-glow"></div>
+        <div class="score-circle">
+          <div class="score-num">${r.global}</div>
+          <div class="score-denom">من ٢١</div>
+        </div>
+      </div>
+      ${interp}
+    </div>
+
+    <div class="components-grid">${compCards}</div>
+
+    <div class="res-note">${note}</div>
+
+    <button class="btn-restart" onclick="restartQuiz()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.5"/></svg>
+      أعد الاختبار
+    </button>
+  `;
+  showScreen('results');
+}
+
+function restartQuiz() {
+  Object.keys(ans).forEach(k => ans[k] = k==='q1'||k==='q3'?'':null);
+  step = 1; goingForward = true;
+  startQuiz();
+}
+</script>
+</body>
 </html>
