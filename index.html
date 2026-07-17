@@ -3,57 +3,53 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>صحة الطالب — قياس جودة النوم (PSQI)</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<title>صحة الطالب من منظور بحثي: قياس جودة النوم</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet" />
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --bg:        #0b1529;
-    --bg2:       #0f1e3a;
-    --card:      #152040;
-    --card2:     #1a2850;
-    --border:    rgba(99,120,200,0.2);
-    --primary:   #7c8ff5;
-    --primary2:  #5a6de0;
-    --text:      #e8ecff;
-    --muted:     #8a9cc5;
-    --emerald:   #34d399;
-    --rose:      #f87171;
-    --amber:     #fbbf24;
-    --radius:    16px;
+    --bg: #0f0f2e;
+    --bg2: #1a1a3e;
+    --card: #1e1e4a;
+    --card2: #252558;
+    --primary: #7c6af7;
+    --primary-hover: #6a57e8;
+    --primary-fg: #ffffff;
+    --border: #2e2e6a;
+    --text: #e8e8ff;
+    --muted: #8888bb;
+    --accent: #a78bfa;
+    --success: #34d399;
+    --warning: #fbbf24;
+    --danger: #f87171;
   }
 
-  html, body {
-    height: 100%;
+  body {
+    font-family: 'Cairo', 'Tajawal', sans-serif;
     background: var(--bg);
     color: var(--text);
-    font-family: 'Tajawal', sans-serif;
-    font-size: 16px;
-    line-height: 1.6;
+    min-height: 100vh;
     overflow-x: hidden;
   }
 
-  /* ── Stars background ── */
+  /* Stars background */
   body::before {
     content: '';
     position: fixed;
     inset: 0;
-    background:
-      radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,.6) 0%, transparent 100%),
-      radial-gradient(1px 1px at 25% 55%, rgba(255,255,255,.4) 0%, transparent 100%),
-      radial-gradient(1px 1px at 40% 10%, rgba(255,255,255,.5) 0%, transparent 100%),
-      radial-gradient(1px 1px at 55% 75%, rgba(255,255,255,.3) 0%, transparent 100%),
-      radial-gradient(1px 1px at 70% 35%, rgba(255,255,255,.6) 0%, transparent 100%),
-      radial-gradient(1px 1px at 80% 15%, rgba(255,255,255,.4) 0%, transparent 100%),
-      radial-gradient(1px 1px at 90% 60%, rgba(255,255,255,.5) 0%, transparent 100%),
-      radial-gradient(1px 1px at 15% 85%, rgba(255,255,255,.3) 0%, transparent 100%),
-      radial-gradient(1px 1px at 60% 90%, rgba(255,255,255,.4) 0%, transparent 100%),
-      radial-gradient(2px 2px at 35% 40%, rgba(255,255,255,.2) 0%, transparent 100%),
-      radial-gradient(2px 2px at 75% 80%, rgba(255,255,255,.2) 0%, transparent 100%),
-      radial-gradient(2px 2px at 5%  50%, rgba(255,255,255,.2) 0%, transparent 100%);
+    background-image:
+      radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 30% 50%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 50% 10%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 70% 80%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 90% 30%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 20% 70%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 60% 60%, rgba(255,255,255,0.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 80% 10%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(2px 2px at 15% 85%, rgba(255,255,255,0.2) 0%, transparent 100%),
+      radial-gradient(2px 2px at 45% 35%, rgba(255,255,255,0.15) 0%, transparent 100%),
+      radial-gradient(2px 2px at 75% 55%, rgba(255,255,255,0.2) 0%, transparent 100%);
     pointer-events: none;
     z-index: 0;
   }
@@ -66,585 +62,305 @@
     flex-direction: column;
   }
 
-  /* ── Screens ── */
-  .screen { display: none; flex-direction: column; align-items: center; min-height: 100vh; padding: 24px 16px; }
-  .screen.active { display: flex; }
+  /* ── SCREENS ── */
+  .screen { display: none; min-height: 100vh; }
+  .screen.active { display: flex; flex-direction: column; }
 
-  /* ── Welcome ── */
-  #welcome {
+  /* ── WELCOME ── */
+  #screen-welcome {
+    align-items: center;
     justify-content: center;
+    padding: 2rem;
     text-align: center;
-    gap: 32px;
   }
-  .moon-wrap {
-    position: relative;
-    width: 140px; height: 140px;
-    margin: 0 auto;
-  }
-  .moon-glow {
-    position: absolute; inset: -20px;
-    background: radial-gradient(circle, rgba(124,143,245,.3) 0%, transparent 70%);
-    border-radius: 50%;
+  .welcome-moon {
+    font-size: 5rem;
+    margin-bottom: 1.5rem;
+    filter: drop-shadow(0 0 24px #7c6af7aa);
     animation: pulse 3s ease-in-out infinite;
   }
-  @keyframes pulse {
-    0%,100% { opacity: .6; transform: scale(1); }
-    50%      { opacity: 1;  transform: scale(1.1); }
-  }
-  .moon-circle {
-    width: 140px; height: 140px;
-    border-radius: 50%;
-    background: var(--card);
-    border: 2px solid rgba(124,143,245,.3);
-    display: flex; align-items: center; justify-content: center;
-    position: relative;
-    overflow: hidden;
-  }
-  .moon-circle svg { width: 72px; height: 72px; color: var(--primary); }
-  .star-dot {
-    position: absolute; border-radius: 50%;
-    background: white;
-  }
+  @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.07)} }
   .welcome-title {
-    font-family: 'Cairo', sans-serif;
-    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    font-size: clamp(1.4rem, 4vw, 2.2rem);
     font-weight: 900;
-    letter-spacing: -1px;
+    line-height: 1.4;
+    background: linear-gradient(135deg, #c4b5fd, #818cf8, #a78bfa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
   }
   .welcome-sub {
-    font-size: 1.15rem;
-    color: var(--primary);
-    font-weight: 600;
-  }
-  .welcome-desc {
-    font-size: 1rem;
     color: var(--muted);
-    max-width: 560px;
-    margin: 0 auto;
+    font-size: 1rem;
+    max-width: 500px;
     line-height: 1.8;
+    margin-bottom: 2.5rem;
   }
-  .btn-start {
-    display: inline-block;
-    padding: 16px 48px;
-    font-family: 'Cairo', sans-serif;
+  .btn-primary {
+    background: linear-gradient(135deg, var(--primary), #6366f1);
+    color: var(--primary-fg);
+    border: none;
+    padding: 1rem 3rem;
+    border-radius: 9999px;
     font-size: 1.1rem;
     font-weight: 700;
-    color: #fff;
-    background: linear-gradient(135deg, var(--primary), var(--primary2));
-    border: none;
-    border-radius: 50px;
+    font-family: inherit;
     cursor: pointer;
-    transition: transform .2s, box-shadow .2s;
-    box-shadow: 0 0 30px rgba(124,143,245,.4);
-    margin-top: 12px;
+    box-shadow: 0 8px 24px rgba(124,106,247,0.4);
+    transition: transform 0.15s, box-shadow 0.15s;
   }
-  .btn-start:hover { transform: scale(1.05); box-shadow: 0 0 50px rgba(124,143,245,.6); }
-  .btn-start:active { transform: scale(.97); }
+  .btn-primary:hover { transform: translateY(-2px) scale(1.04); box-shadow: 0 12px 32px rgba(124,106,247,0.55); }
+  .btn-primary:active { transform: scale(0.97); }
 
-  /* ── Progress bar ── */
-  #quiz { justify-content: flex-start; gap: 0; }
-  .progress-wrap {
-    width: 100%; max-width: 680px;
-    padding: 16px 0 24px;
-    flex-shrink: 0;
-  }
-  .progress-header {
-    display: flex;
-    justify-content: space-between;
-    font-size: .85rem;
-    color: var(--muted);
-    margin-bottom: 8px;
-    font-family: 'Cairo', sans-serif;
-  }
-  .progress-track {
-    width: 100%;
-    height: 6px;
-    background: var(--card2);
-    border-radius: 3px;
-    overflow: hidden;
-  }
-  .progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--primary2), var(--primary));
-    border-radius: 3px;
-    transition: width .4s cubic-bezier(.4,0,.2,1);
-  }
+  /* ── QUIZ ── */
+  #screen-quiz { padding: 1.5rem 1rem; }
 
-  /* ── Question Card ── */
-  .q-wrap {
-    width: 100%; max-width: 680px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 4px 0;
-  }
+  /* Progress bar */
+  .progress-wrap { max-width: 700px; margin: 0 auto 0.5rem; }
+  .progress-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+  .progress-label { font-size: 0.85rem; color: var(--muted); }
+  .progress-bar-bg { background: var(--border); border-radius: 9999px; height: 6px; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--primary), #818cf8); border-radius: 9999px; transition: width 0.4s cubic-bezier(.4,0,.2,1); }
+
+  /* Question card */
+  .q-outer { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1rem 0; }
   .q-card {
     background: var(--card);
     border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 28px 24px;
-    box-shadow: 0 8px 40px rgba(0,0,0,.3);
+    border-radius: 1.5rem;
+    padding: 2rem 1.5rem;
+    width: 100%;
+    max-width: 700px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+    animation: fadeSlide 0.3s ease;
   }
-  .q-num {
-    font-size: .78rem;
-    font-weight: 700;
-    color: var(--primary);
-    letter-spacing: .1em;
-    text-transform: uppercase;
-    margin-bottom: 6px;
-    font-family: 'Cairo', sans-serif;
-  }
-  .q-title {
-    font-family: 'Cairo', sans-serif;
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 6px;
-    color: var(--text);
-  }
-  .q-sub {
-    font-size: .97rem;
-    color: var(--muted);
-    margin-bottom: 20px;
-    line-height: 1.7;
-  }
-  .q-note {
-    font-size: .88rem;
-    color: var(--muted);
-    margin-top: -12px;
-    margin-bottom: 16px;
-    opacity: .8;
-  }
+  @keyframes fadeSlide { from{opacity:0;transform:translateX(-24px)} to{opacity:1;transform:translateX(0)} }
+  .q-card.slide-back { animation: fadeSlideBack 0.3s ease; }
+  @keyframes fadeSlideBack { from{opacity:0;transform:translateX(24px)} to{opacity:1;transform:translateX(0)} }
+  .q-title { font-size: 1.4rem; font-weight: 800; color: var(--accent); margin-bottom: 0.5rem; }
+  .q-sub { font-size: 0.95rem; color: var(--muted); line-height: 1.7; margin-bottom: 1.5rem; }
 
-  /* ── Radio Cards ── */
-  .radio-options { display: flex; flex-direction: column; gap: 10px; }
+  /* Radio cards */
+  .radio-list { display: flex; flex-direction: column; gap: 0.75rem; }
   .radio-card {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 14px 18px;
-    background: var(--card2);
-    border: 2px solid var(--border);
-    border-radius: 12px;
-    cursor: pointer;
-    transition: border-color .2s, background .2s, transform .15s;
+    display: flex; align-items: center; gap: 0.75rem;
+    background: var(--card2); border: 2px solid var(--border);
+    border-radius: 1rem; padding: 1rem 1.25rem;
+    cursor: pointer; transition: border-color 0.15s, background 0.15s, transform 0.1s;
     user-select: none;
   }
-  .radio-card:hover { border-color: rgba(124,143,245,.5); background: rgba(124,143,245,.08); }
-  .radio-card.selected {
-    border-color: var(--primary);
-    background: rgba(124,143,245,.15);
-    transform: scale(1.01);
-  }
+  .radio-card:hover { border-color: var(--primary); background: rgba(124,106,247,0.1); transform: translateY(-1px); }
+  .radio-card.selected { border-color: var(--primary); background: rgba(124,106,247,0.18); }
   .radio-dot {
-    width: 20px; height: 20px;
-    border-radius: 50%;
-    border: 2px solid var(--muted);
-    flex-shrink: 0;
+    width: 22px; height: 22px; border-radius: 50%;
+    border: 2px solid var(--muted); flex-shrink: 0;
     display: flex; align-items: center; justify-content: center;
-    transition: border-color .2s;
+    transition: border-color 0.15s, background 0.15s;
   }
-  .radio-card.selected .radio-dot {
-    border-color: var(--primary);
-    background: var(--primary);
-  }
+  .radio-card.selected .radio-dot { border-color: var(--primary); background: var(--primary); }
   .radio-dot::after {
-    content: '';
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: white;
-    opacity: 0;
-    transition: opacity .2s;
+    content: ''; width: 8px; height: 8px; border-radius: 50%;
+    background: white; opacity: 0; transition: opacity 0.15s;
   }
   .radio-card.selected .radio-dot::after { opacity: 1; }
-  .radio-label {
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--text);
-  }
+  .radio-label { font-size: 1rem; font-weight: 600; }
 
-  /* ── Number / Time inputs ── */
-  .input-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; }
-  .input-label { font-size: .9rem; color: var(--muted); }
-  .q-input {
-    width: 100%;
-    max-width: 280px;
-    text-align: center;
-    font-size: 2.2rem;
-    font-family: 'Cairo', sans-serif;
-    font-weight: 700;
-    padding: 18px 20px;
-    background: var(--card2);
-    border: 2px solid var(--border);
-    border-radius: 14px;
-    color: var(--text);
-    outline: none;
-    transition: border-color .2s, box-shadow .2s;
+  /* Number / Time inputs */
+  .input-wrap { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+  .input-label { color: var(--muted); font-size: 0.9rem; }
+  .big-input {
+    text-align: center; font-size: 2.5rem; font-weight: 700;
+    font-family: inherit;
+    padding: 1rem 1.5rem; background: var(--card2);
+    border: 2px solid var(--border); border-radius: 1rem;
+    color: var(--text); outline: none; width: 100%; max-width: 280px;
+    transition: border-color 0.15s, box-shadow 0.15s;
   }
-  .q-input:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 4px rgba(124,143,245,.15);
-  }
-  input[type="time"]::-webkit-calendar-picker-indicator { filter: invert(1); }
+  .big-input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(124,106,247,0.2); }
+  .big-input::-webkit-inner-spin-button, .big-input::-webkit-outer-spin-button { -webkit-appearance: none; }
+  input[type="time"]::-webkit-calendar-picker-indicator { filter: invert(1) opacity(0.5); cursor: pointer; }
 
-  /* ── Grid Question (Q5b-j, Q10) ── */
-  .grid-q-title {
-    font-size: .97rem;
-    color: var(--muted);
-    margin-bottom: 16px;
-    line-height: 1.7;
+  /* Grid question */
+  .grid-title { font-size: 0.95rem; color: var(--muted); margin-bottom: 1rem; }
+  .grid-table { width: 100%; border-collapse: separate; border-spacing: 0 0.5rem; }
+  .grid-head th { font-size: 0.78rem; color: var(--muted); font-weight: 600; padding: 0.25rem 0.5rem; text-align: center; }
+  .grid-head th:first-child { text-align: right; }
+  .grid-row td { padding: 0.35rem 0.4rem; }
+  .grid-row td:first-child { font-size: 0.9rem; padding-right: 0.2rem; }
+  .grid-row:nth-child(even) td { background: rgba(255,255,255,0.03); }
+  .grid-row td:first-child { border-radius: 0.5rem 0 0 0.5rem; }
+  .grid-row td:last-child { border-radius: 0 0.5rem 0.5rem 0; }
+  .grid-btn {
+    display: block; width: 100%; padding: 0.45rem 0.2rem;
+    background: var(--card2); border: 2px solid var(--border);
+    border-radius: 0.5rem; cursor: pointer; color: var(--muted);
+    font-size: 0.78rem; font-family: inherit; font-weight: 600;
+    transition: border-color 0.12s, background 0.12s, color 0.12s;
   }
-  .grid-table { width: 100%; border-collapse: collapse; }
-  /* Desktop: real table layout */
-  .grid-thead th {
-    font-size: .72rem;
-    font-weight: 600;
-    color: var(--muted);
-    padding: 6px 8px;
-    text-align: center;
-    border-bottom: 1px solid var(--border);
-  }
-  .grid-thead th:first-child { text-align: right; }
-  .grid-row td {
-    padding: 10px 8px;
-    border-bottom: 1px solid rgba(99,120,200,.1);
-    vertical-align: middle;
-  }
-  .grid-row td:first-child {
-    font-size: .93rem;
-    color: var(--text);
-    padding-right: 0;
-  }
-  .grid-cell { text-align: center; }
-  .grid-radio {
-    width: 22px; height: 22px;
-    border-radius: 50%;
-    border: 2px solid var(--muted);
-    display: inline-flex; align-items: center; justify-content: center;
-    cursor: pointer;
-    transition: border-color .2s, background .2s;
-    margin: 0 auto;
-  }
-  .grid-radio.sel { border-color: var(--primary); background: var(--primary); }
-  .grid-radio.sel::after {
-    content: '';
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: white;
-    display: block;
-  }
+  .grid-btn:hover { border-color: var(--primary); color: var(--accent); }
+  .grid-btn.sel { border-color: var(--primary); background: rgba(124,106,247,0.2); color: var(--primary-fg); }
 
-  /* Mobile: collapse grid to cards */
-  @media (max-width: 600px) {
-    .grid-thead { display: none; }
-    .grid-row { display: block; background: var(--card2); border-radius: 12px; margin-bottom: 10px; padding: 12px; }
-    .grid-row td { display: block; padding: 4px 0; border-bottom: none; }
-    .grid-row td:first-child { font-size: .95rem; margin-bottom: 8px; font-weight: 600; }
-    .grid-cell { text-align: right; }
-    .mobile-opts { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
-    .mobile-opt {
-      flex: 1; min-width: 120px;
-      padding: 8px 10px;
-      background: var(--card);
-      border: 2px solid var(--border);
-      border-radius: 10px;
-      font-size: .8rem;
-      text-align: center;
-      cursor: pointer;
-      color: var(--muted);
-      transition: border-color .2s, color .2s;
-    }
-    .mobile-opt.sel { border-color: var(--primary); color: var(--text); background: rgba(124,143,245,.12); }
+  /* Navigation */
+  .nav-bar { max-width: 700px; margin: 1.5rem auto 0; display: flex; justify-content: space-between; align-items: center; }
+  .btn-ghost {
+    background: transparent; border: 2px solid transparent;
+    color: var(--muted); padding: 0.75rem 1.5rem;
+    border-radius: 9999px; font-size: 1rem; font-weight: 700;
+    font-family: inherit; cursor: pointer;
+    transition: background 0.15s, color 0.15s;
   }
-  @media (min-width: 601px) {
-    .mobile-opts { display: none; }
-  }
-
-  /* ── Nav buttons ── */
-  .nav-row {
-    width: 100%; max-width: 680px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 0 28px;
-    gap: 12px;
-    flex-shrink: 0;
-  }
-  .btn-nav {
-    padding: 12px 28px;
-    border-radius: 50px;
-    font-family: 'Cairo', sans-serif;
-    font-size: 1rem;
-    font-weight: 700;
-    cursor: pointer;
-    border: 2px solid transparent;
-    transition: all .2s;
-  }
-  .btn-prev {
-    background: transparent;
-    border-color: var(--border);
-    color: var(--muted);
-  }
-  .btn-prev:hover { background: var(--card2); color: var(--text); }
-  .btn-prev:disabled { opacity: 0; pointer-events: none; }
+  .btn-ghost:hover:not(:disabled) { background: var(--card); color: var(--text); }
+  .btn-ghost:disabled { opacity: 0; pointer-events: none; }
   .btn-next {
-    background: linear-gradient(135deg, var(--primary), var(--primary2));
-    color: white;
-    box-shadow: 0 4px 20px rgba(124,143,245,.3);
+    background: linear-gradient(135deg, var(--primary), #6366f1);
+    color: white; border: none; padding: 0.75rem 2.5rem;
+    border-radius: 9999px; font-size: 1rem; font-weight: 700;
+    font-family: inherit; cursor: pointer;
+    box-shadow: 0 4px 16px rgba(124,106,247,0.4);
+    transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
   }
-  .btn-next:hover:not(:disabled) { transform: scale(1.04); box-shadow: 0 4px 30px rgba(124,143,245,.5); }
-  .btn-next:active:not(:disabled) { transform: scale(.98); }
-  .btn-next:disabled { opacity: .45; cursor: not-allowed; }
-  .btn-skip {
-    background: transparent;
-    border-color: var(--border);
-    color: var(--muted);
-    font-size: .9rem;
-  }
-  .btn-skip:hover { background: var(--card2); }
+  .btn-next:hover:not(:disabled) { transform: translateY(-2px) scale(1.04); box-shadow: 0 8px 24px rgba(124,106,247,0.55); }
+  .btn-next:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
 
-  /* ── Results ── */
-  #results { justify-content: flex-start; gap: 32px; }
-  .results-inner { width: 100%; max-width: 680px; display: flex; flex-direction: column; gap: 28px; padding-bottom: 48px; }
-  .res-header { text-align: center; }
-  .res-title {
-    font-family: 'Cairo', sans-serif;
-    font-size: clamp(1.8rem, 5vw, 2.8rem);
-    font-weight: 900;
-    margin-bottom: 24px;
-  }
-  .score-circle-wrap { display: flex; justify-content: center; position: relative; }
-  .score-glow {
-    position: absolute; inset: -30px;
-    background: radial-gradient(circle, rgba(124,143,245,.25) 0%, transparent 70%);
-    border-radius: 50%;
-  }
+  /* ── RESULTS ── */
+  #screen-results { align-items: center; justify-content: flex-start; padding: 2rem 1rem; }
+  .results-inner { width: 100%; max-width: 700px; margin: 0 auto; }
+  .results-title { font-size: 1.8rem; font-weight: 900; text-align: center; background: linear-gradient(135deg, #c4b5fd, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 0.25rem; }
+  .results-sub { text-align: center; color: var(--muted); margin-bottom: 2rem; }
+
+  .score-circle-wrap { display: flex; justify-content: center; margin-bottom: 2rem; }
   .score-circle {
-    width: 180px; height: 180px;
-    border-radius: 50%;
+    width: 160px; height: 160px; border-radius: 50%;
+    border: 6px solid var(--primary);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    box-shadow: 0 0 40px rgba(124,106,247,0.35);
     background: var(--card);
-    border: 2px solid var(--border);
-    box-shadow: 0 12px 48px rgba(0,0,0,.4);
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    position: relative; z-index: 1;
   }
-  .score-num {
-    font-family: 'Cairo', sans-serif;
-    font-size: 4rem;
-    font-weight: 900;
-    line-height: 1;
-    color: var(--text);
+  .score-num { font-size: 3rem; font-weight: 900; color: var(--accent); line-height: 1; }
+  .score-max { font-size: 0.85rem; color: var(--muted); }
+  .score-label-chip {
+    display: inline-block; margin-top: 0.4rem;
+    padding: 0.2rem 0.75rem; border-radius: 9999px;
+    font-size: 0.8rem; font-weight: 700;
   }
-  .score-denom {
-    font-size: 1.1rem;
-    color: var(--muted);
-    border-top: 1.5px solid var(--border);
-    padding-top: 4px;
-    margin-top: 4px;
-    width: 60px;
-    text-align: center;
-  }
-  .interp-badge {
-    display: inline-flex; align-items: center; gap: 10px;
-    padding: 12px 24px;
-    border-radius: 50px;
-    border: 2px solid;
-    font-family: 'Cairo', sans-serif;
-    font-size: 1.15rem;
-    font-weight: 700;
-    margin-top: 20px;
-  }
-  .badge-good  { border-color: rgba(52,211,153,.4); color: var(--emerald); background: rgba(52,211,153,.08); }
-  .badge-poor  { border-color: rgba(248,113,113,.4); color: var(--rose);   background: rgba(248,113,113,.08); }
 
-  .components-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
+  .interp-card {
+    border-radius: 1rem; padding: 1rem 1.25rem;
+    margin-bottom: 1.5rem; border: 1px solid;
+    font-size: 0.95rem; line-height: 1.7;
   }
-  @media (max-width: 520px) { .components-grid { grid-template-columns: 1fr; } }
 
+  .comp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 2rem; }
+  @media(max-width:500px){ .comp-grid { grid-template-columns: 1fr; } }
   .comp-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 16px 18px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    animation: fadeUp .4s ease both;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 1rem; padding: 1rem;
   }
-  @keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:none; } }
-  .comp-card:nth-child(1){animation-delay:.05s}
-  .comp-card:nth-child(2){animation-delay:.1s}
-  .comp-card:nth-child(3){animation-delay:.15s}
-  .comp-card:nth-child(4){animation-delay:.2s}
-  .comp-card:nth-child(5){animation-delay:.25s}
-  .comp-card:nth-child(6){animation-delay:.3s}
-  .comp-card:nth-child(7){animation-delay:.35s}
+  .comp-name { font-size: 0.82rem; color: var(--muted); margin-bottom: 0.3rem; }
+  .comp-score-row { display: flex; align-items: center; gap: 0.5rem; }
+  .comp-score { font-size: 1.4rem; font-weight: 800; color: var(--accent); }
+  .comp-bar-bg { flex: 1; background: var(--border); border-radius: 9999px; height: 6px; overflow: hidden; }
+  .comp-bar-fill { height: 100%; border-radius: 9999px; background: linear-gradient(90deg, var(--primary), #818cf8); transition: width 0.6s ease; }
 
-  .comp-label { font-size: .92rem; font-weight: 600; color: var(--text); }
-  .comp-extra  { font-size: .78rem; color: var(--muted); margin-top: 2px; }
-  .comp-score-wrap { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
-  .comp-score {
-    font-family: 'Cairo', sans-serif;
-    font-size: 1.8rem;
-    font-weight: 900;
-    color: var(--primary);
-    line-height: 1;
+  .efficiency-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 1rem; padding: 1rem 1.25rem; margin-bottom: 2rem;
+    display: flex; align-items: center; gap: 1rem;
   }
-  .score-bar { display: flex; gap: 4px; }
-  .bar-seg {
-    width: 14px; height: 5px;
-    border-radius: 3px;
-    background: var(--card2);
-    transition: background .3s;
-  }
-  .bar-seg.lit-0 { background: var(--emerald); }
-  .bar-seg.lit-1 { background: var(--primary); }
-  .bar-seg.lit-2 { background: var(--amber); }
-  .bar-seg.lit-3 { background: var(--rose); }
+  .eff-pct { font-size: 2rem; font-weight: 900; color: var(--accent); white-space: nowrap; }
+  .eff-label { color: var(--muted); font-size: 0.9rem; }
 
-  .res-note {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 16px 20px;
-    font-size: .9rem;
-    color: var(--muted);
-    line-height: 1.8;
-  }
-  .res-note strong { color: var(--text); }
+  .btn-restart { display: block; margin: 0 auto 3rem; }
 
-  .btn-restart {
-    display: flex; align-items: center; justify-content: center; gap: 10px;
-    padding: 14px 36px;
-    background: var(--card2);
-    border: 2px solid var(--border);
-    border-radius: 50px;
-    font-family: 'Cairo', sans-serif;
-    font-size: 1rem;
-    font-weight: 700;
-    color: var(--text);
-    cursor: pointer;
-    transition: all .2s;
-    margin: 0 auto;
-    width: fit-content;
-  }
-  .btn-restart:hover { border-color: var(--primary); background: rgba(124,143,245,.1); transform: scale(1.03); }
-  .btn-restart svg { width: 18px; height: 18px; }
-
-  /* slide transition */
-  .slide-enter { animation: slideIn .32s cubic-bezier(.4,0,.2,1) both; }
-  .slide-exit  { animation: slideOut .32s cubic-bezier(.4,0,.2,1) both; }
-  @keyframes slideIn  { from { opacity:0; transform:translateX(-60px); } to { opacity:1; transform:none; } }
-  @keyframes slideOut { from { opacity:1; transform:none; } to { opacity:0; transform:translateX(60px); } }
-  .slide-enter-back { animation: slideInBack .32s cubic-bezier(.4,0,.2,1) both; }
-  @keyframes slideInBack { from { opacity:0; transform:translateX(60px); } to { opacity:1; transform:none; } }
+  /* scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 </style>
 </head>
 <body>
 <div id="app">
 
-<!-- ═══════════ WELCOME ═══════════ -->
-<section class="screen active" id="welcome">
-  <div class="moon-wrap">
-    <div class="moon-glow"></div>
-    <div class="moon-circle">
-      <div class="star-dot" style="width:4px;height:4px;top:16px;right:24px;opacity:.7"></div>
-      <div class="star-dot" style="width:6px;height:6px;top:36px;left:18px;opacity:.5"></div>
-      <div class="star-dot" style="width:3px;height:3px;bottom:22px;right:30px;opacity:.6"></div>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-      </svg>
+  <!-- WELCOME -->
+  <div id="screen-welcome" class="screen active">
+    <div class="welcome-moon">🌙</div>
+    <h1 class="welcome-title">صحة الطالب من منظور بحثي<br/>قياس جودة النوم</h1>
+    <p class="welcome-sub">
+      هذا الاستبيان يقيس جودة نومك خلال الشهر الماضي باستخدام مؤشر بيتسبرغ لجودة النوم (PSQI).
+      أجب بصدق عن كل سؤال للحصول على تقييم دقيق.
+    </p>
+    <button class="btn-primary" onclick="startQuiz()">ابدأ الاستبيان</button>
+  </div>
+
+  <!-- QUIZ -->
+  <div id="screen-quiz" class="screen">
+    <div class="progress-wrap">
+      <div class="progress-top">
+        <span class="progress-label" id="prog-text">السؤال 1 من 10</span>
+        <span class="progress-label" id="prog-pct">0%</span>
+      </div>
+      <div class="progress-bar-bg"><div class="progress-bar-fill" id="prog-bar" style="width:0%"></div></div>
+    </div>
+    <div class="q-outer">
+      <div class="q-card" id="q-card"><!-- rendered by JS --></div>
+    </div>
+    <div class="nav-bar">
+      <button class="btn-ghost" id="btn-prev" onclick="prevStep()" disabled>السابق</button>
+      <button class="btn-next" id="btn-next" onclick="nextStep()">التالي</button>
     </div>
   </div>
-  <h1 class="welcome-title">صحة الطالب</h1>
-  <p class="welcome-sub">قياس جودة النوم | مؤشر بيتسبرغ (PSQI)</p>
-  <p class="welcome-desc">
-    الأسئلة التالية تتعلق بعادات نومك المعتادة خلال الشهر الماضي فقط.
-    يجب أن تعكس إجاباتك الحالة الأكثر دقة خلال معظم الأيام والليالي في الشهر الماضي.
-  </p>
-  <button class="btn-start" onclick="startQuiz()">ابدأ الاستبيان</button>
-</section>
 
-<!-- ═══════════ QUIZ ═══════════ -->
-<section class="screen" id="quiz">
-  <div class="progress-wrap">
-    <div class="progress-header">
-      <span id="prog-text">السؤال 1 من 11</span>
-      <span id="prog-pct">9%</span>
-    </div>
-    <div class="progress-track"><div class="progress-fill" id="prog-fill" style="width:9%"></div></div>
+  <!-- RESULTS -->
+  <div id="screen-results" class="screen">
+    <div class="results-inner" id="results-inner"><!-- rendered by JS --></div>
   </div>
-
-  <div class="q-wrap" id="q-wrap">
-    <!-- rendered by JS -->
-  </div>
-
-  <div class="nav-row">
-    <button class="btn-nav btn-prev" id="btn-prev" onclick="prevStep()">السابق</button>
-    <div style="display:flex;gap:10px;align-items:center">
-      <button class="btn-nav btn-skip" id="btn-skip" onclick="skipStep()" style="display:none">تخطي هذا السؤال</button>
-      <button class="btn-nav btn-next" id="btn-next" onclick="nextStep()">التالي</button>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════ RESULTS ═══════════ -->
-<section class="screen" id="results">
-  <div class="results-inner" id="results-inner">
-    <!-- rendered by JS -->
-  </div>
-</section>
 
 </div>
-
 <script>
-// ═══════════════════════════════════════
-//  STATE
-// ═══════════════════════════════════════
-const TOTAL = 11;
+// ─────────────────────────────────────────────
+// State
+// ─────────────────────────────────────────────
+const TOTAL = 10;
 let step = 1;
-let goingForward = true;
+let goingBack = false;
 
 const ans = {
-  q1: '', q2: null, q3: '', q4: null,
-  q5a: null, q5b: null, q5c: null, q5d: null, q5e: null,
+  q1_bedtime: '',
+  q2_sleep_latency: null,
+  q3_wake_time: '',
+  q4_hours: null,
+  q5a: null,
+  q5b: null, q5c: null, q5d: null, q5e: null,
   q5f: null, q5g: null, q5h: null, q5i: null, q5j: null,
   q6: null, q7: null, q8: null, q9: null,
-  q10a: null, q10b: null, q10c: null, q10d: null, q10e: null,
 };
 
 const FREQ = [
-  { v:0, l:'ليس خلال الشهر الماضي' },
-  { v:1, l:'أقل من مرة أسبوعيًا' },
-  { v:2, l:'مرة أو مرتين أسبوعيًا' },
-  { v:3, l:'ثلاث مرات أو أكثر أسبوعيًا' },
+  { v: 0, l: 'ليس خلال الشهر الماضي' },
+  { v: 1, l: 'أقل من مرة أسبوعيًا' },
+  { v: 2, l: 'مرة أو مرتين أسبوعيًا' },
+  { v: 3, l: 'ثلاث مرات أو أكثر أسبوعيًا' },
 ];
 
-// ═══════════════════════════════════════
-//  NAVIGATION
-// ═══════════════════════════════════════
-function showScreen(id) {
+// ─────────────────────────────────────────────
+// Navigation
+// ─────────────────────────────────────────────
+function startQuiz() {
+  show('screen-quiz');
+  render();
+}
+
+function show(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
 }
 
-function startQuiz() {
-  step = 1;
-  showScreen('quiz');
-  renderStep(true);
-}
-
 function nextStep() {
-  if (isDisabled()) return;
   if (step < TOTAL) {
-    goingForward = true;
+    goingBack = false;
     step++;
-    renderStep(true);
+    render();
   } else {
     showResults();
   }
@@ -652,331 +368,313 @@ function nextStep() {
 
 function prevStep() {
   if (step > 1) {
-    goingForward = false;
+    goingBack = true;
     step--;
-    renderStep(false);
+    render();
   }
 }
 
-function skipStep() {
-  showResults();
-}
-
-function updateNav() {
-  document.getElementById('btn-prev').disabled = (step === 1);
-  document.getElementById('btn-next').disabled = isDisabled();
-  document.getElementById('btn-next').textContent = step === TOTAL ? 'إظهار النتائج' : 'التالي';
-  document.getElementById('btn-skip').style.display = step === TOTAL ? 'inline-block' : 'none';
-  const pct = Math.round((step / TOTAL) * 100);
-  document.getElementById('prog-fill').style.width = pct + '%';
+function render() {
+  // Progress
+  const pct = Math.round(((step - 1) / TOTAL) * 100);
   document.getElementById('prog-text').textContent = `السؤال ${step} من ${TOTAL}`;
   document.getElementById('prog-pct').textContent = pct + '%';
+  document.getElementById('prog-bar').style.width = pct + '%';
+
+  // Card animation
+  const card = document.getElementById('q-card');
+  card.className = 'q-card' + (goingBack ? ' slide-back' : '');
+  // force reflow
+  void card.offsetWidth;
+
+  card.innerHTML = buildStep(step);
+
+  // Buttons
+  document.getElementById('btn-prev').disabled = step === 1;
+  const nextBtn = document.getElementById('btn-next');
+  nextBtn.textContent = step === TOTAL ? 'إظهار النتائج' : 'التالي';
+  updateNextBtn();
 }
 
-function isDisabled() {
-  switch(step) {
-    case 1: return !ans.q1;
-    case 2: return ans.q2 === null || ans.q2 === '';
-    case 3: return !ans.q3;
-    case 4: return ans.q4 === null || ans.q4 === '';
+function updateNextBtn() {
+  document.getElementById('btn-next').disabled = isDisabled(step);
+}
+
+function isDisabled(s) {
+  switch (s) {
+    case 1: return !ans.q1_bedtime;
+    case 2: return ans.q2_sleep_latency === null;
+    case 3: return !ans.q3_wake_time;
+    case 4: return ans.q4_hours === null;
     case 5: return ans.q5a === null;
-    case 6: return [ans.q5b,ans.q5c,ans.q5d,ans.q5e,ans.q5f,ans.q5g,ans.q5h,ans.q5i,ans.q5j].some(v=>v===null);
+    case 6: return [ans.q5b,ans.q5c,ans.q5d,ans.q5e,ans.q5f,ans.q5g,ans.q5h,ans.q5i,ans.q5j].some(v => v === null);
     case 7: return ans.q6 === null;
     case 8: return ans.q7 === null;
     case 9: return ans.q8 === null;
     case 10: return ans.q9 === null;
-    case 11: return false;
     default: return false;
   }
 }
 
-// ═══════════════════════════════════════
-//  RENDER HELPERS
-// ═══════════════════════════════════════
-function card(title, sub, body, num) {
-  return `
-    <div class="q-card">
-      ${num ? `<div class="q-num">السؤال ${num}</div>` : ''}
-      <h2 class="q-title">${title}</h2>
-      ${sub ? `<p class="q-sub">${sub}</p>` : ''}
-      ${body}
-    </div>`;
-}
-
-function radioOpts(options, key) {
-  return '<div class="radio-options">' + options.map(o => `
-    <div class="radio-card ${ans[key]===o.v?'selected':''}" onclick="pick('${key}',${o.v})">
-      <div class="radio-dot"></div>
-      <span class="radio-label">${o.l}</span>
-    </div>`).join('') + '</div>';
-}
-
-function pick(key, val) {
-  ans[key] = val;
-  renderStep(goingForward, true); // re-render same step (no animation)
-}
-
-function inputNum(key, placeholder, step_attr, max) {
-  return `<div class="input-wrap">
-    <label class="input-label">أدخل العدد</label>
-    <input class="q-input" type="number" min="0" max="${max}" step="${step_attr}"
-      placeholder="${placeholder}" value="${ans[key]!==null?ans[key]:''}"
-      oninput="ans['${key}']=this.value===''?null:Number(this.value);updateNav()" />
-  </div>`;
-}
-
-function inputTime(key) {
-  return `<div class="input-wrap">
-    <input class="q-input" type="time" value="${ans[key]}"
-      oninput="ans['${key}']=this.value;updateNav()" style="max-width:220px;font-size:2.5rem;" />
-  </div>`;
-}
-
-function gridQ(title, items, keys) {
-  const cols = FREQ.map(f=>`<th>${f.l}</th>`).join('');
-  const desktopRows = items.map((item, i) => {
-    const k = keys[i];
-    const cells = FREQ.map(f => `
-      <td class="grid-cell">
-        <div class="grid-radio ${ans[k]===f.v?'sel':''}" onclick="pick('${k}',${f.v})"></div>
-      </td>`).join('');
-    return `<tr class="grid-row"><td>${item}</td>${cells}</tr>`;
-  }).join('');
-
-  const mobileCards = items.map((item, i) => {
-    const k = keys[i];
-    const opts = FREQ.map(f => `
-      <div class="mobile-opt ${ans[k]===f.v?'sel':''}" onclick="pick('${k}',${f.v})">${f.l}</div>`).join('');
-    return `<tr class="grid-row">
-      <td>${item}</td>
-      <td><div class="mobile-opts">${opts}</div></td>
-    </tr>`;
-  }).join('');
-
-  return `<p class="grid-q-title">${title}</p>
-    <div style="overflow-x:auto">
-    <table class="grid-table">
-      <thead class="grid-thead"><tr><th>السبب</th>${cols}</tr></thead>
-      <tbody>${desktopRows}${mobileCards}</tbody>
-    </table></div>`;
-}
-
-// ═══════════════════════════════════════
-//  STEP RENDERERS
-// ═══════════════════════════════════════
-function renderStep(forward, noAnim) {
-  updateNav();
-  const wrap = document.getElementById('q-wrap');
-
-  const html = getStepHTML();
-
-  if (noAnim) {
-    wrap.innerHTML = html;
-    return;
-  }
-  const cls = forward ? 'slide-enter' : 'slide-enter-back';
-  wrap.innerHTML = `<div class="${cls}">${html}</div>`;
-}
-
-function getStepHTML() {
-  switch(step) {
+// ─────────────────────────────────────────────
+// Step builder
+// ─────────────────────────────────────────────
+function buildStep(s) {
+  switch (s) {
     case 1: return card('وقت النوم',
       'خلال الشهر الماضي، في أي وقت كنت تذهب عادةً إلى السرير ليلًا؟',
-      inputTime('q1'), 1);
+      `<div class="input-wrap">
+        <label class="input-label">اختر الوقت</label>
+        <input class="big-input" type="time" value="${ans.q1_bedtime}"
+          oninput="ans.q1_bedtime=this.value;updateNextBtn()">
+       </div>`);
 
     case 2: return card('الاستغراق في النوم',
       'خلال الشهر الماضي، كم من الوقت (بالدقائق) كنت تحتاج عادةً حتى تغفو كل ليلة؟',
-      inputNum('q2','30','1','300'), 2);
+      `<div class="input-wrap">
+        <label class="input-label">عدد الدقائق</label>
+        <input class="big-input" type="number" min="0" max="180" placeholder="0"
+          value="${ans.q2_sleep_latency ?? ''}"
+          oninput="ans.q2_sleep_latency=this.value===''?null:Number(this.value);updateNextBtn()">
+       </div>`);
 
     case 3: return card('وقت الاستيقاظ',
       'خلال الشهر الماضي، في أي وقت كنت تستيقظ عادةً في الصباح؟',
-      inputTime('q3'), 3);
+      `<div class="input-wrap">
+        <label class="input-label">اختر الوقت</label>
+        <input class="big-input" type="time" value="${ans.q3_wake_time}"
+          oninput="ans.q3_wake_time=this.value;updateNextBtn()">
+       </div>`);
 
     case 4: return card('ساعات النوم الفعلية',
-      'خلال الشهر الماضي، كم عدد ساعات النوم الفعلية التي حصلت عليها ليلًا؟',
-      `<p class="q-note">(قد يختلف ذلك عن عدد الساعات التي قضيتها في السرير)</p>` +
-      inputNum('q4','7','0.5','24'), 4);
+      'خلال الشهر الماضي، كم عدد ساعات النوم الفعلية التي حصلت عليها ليلًا؟ (قد يختلف ذلك عن عدد الساعات التي قضيتها في السرير)',
+      `<div class="input-wrap">
+        <label class="input-label">عدد الساعات</label>
+        <input class="big-input" type="number" min="0" max="24" step="0.5" placeholder="7.5"
+          value="${ans.q4_hours ?? ''}"
+          oninput="ans.q4_hours=this.value===''?null:Number(this.value);updateNextBtn()">
+       </div>`);
 
     case 5: return card('اضطرابات النوم',
       'خلال الشهر الماضي، كم مرة واجهت صعوبة في النوم بسبب أنك لا تستطيع النوم خلال 30 دقيقة؟',
-      radioOpts(FREQ,'q5a'), 5);
+      radioList(FREQ, 'q5a'));
 
-    case 6: return card('أسباب اضطرابات النوم', null,
+    case 6: return card('أسباب أخرى لاضطرابات النوم', '',
       gridQ('خلال الشهر الماضي، كم مرة واجهت صعوبة في النوم بسبب:', [
-        'تستيقظ في منتصف الليل أو في الصباح الباكر',
-        'تحتاج إلى النهوض لاستخدام الحمام',
-        'لا تستطيع التنفس بشكل مريح',
-        'تسعل أو تشخر بصوت مرتفع',
-        'تشعر بالبرد الشديد',
-        'تشعر بالحر الشديد',
-        'تراودك أحلام سيئة (كوابيس)',
-        'تشعر بالألم',
-        'سبب آخر',
-      ], ['q5b','q5c','q5d','q5e','q5f','q5g','q5h','q5i','q5j']), 6);
+        ['q5b', 'تستيقظ في منتصف الليل أو في الصباح الباكر'],
+        ['q5c', 'تحتاج إلى النهوض لاستخدام الحمام'],
+        ['q5d', 'لا تستطيع التنفس بشكل مريح'],
+        ['q5e', 'تسعل أو تشخر بصوت مرتفع'],
+        ['q5f', 'تشعر بالبرد الشديد'],
+        ['q5g', 'تشعر بالحر الشديد'],
+        ['q5h', 'تراودك أحلام سيئة (كوابيس)'],
+        ['q5i', 'تشعر بالألم'],
+        ['q5j', 'سبب آخر'],
+      ]));
 
     case 7: return card('جودة النوم العامة',
       'خلال الشهر الماضي، كيف تقيّم جودة نومك بشكل عام؟',
-      radioOpts([
-        {v:0,l:'جيدة جدًا'},{v:1,l:'جيدة إلى حد ما'},
-        {v:2,l:'سيئة إلى حد ما'},{v:3,l:'سيئة جدًا'},
-      ],'q6'), 7);
+      radioList([
+        {v:0,l:'جيدة جدًا'}, {v:1,l:'جيدة إلى حد ما'},
+        {v:2,l:'سيئة إلى حد ما'}, {v:3,l:'سيئة جدًا'},
+      ], 'q6'));
 
     case 8: return card('أدوية النوم',
-      'خلال الشهر الماضي، كم مرة تناولت أدوية للمساعدة على النوم؟',
-      `<p class="q-note">(سواء بوصفة طبية أو أدوية تُباع دون وصفة)</p>` +
-      radioOpts(FREQ,'q7'), 8);
+      'خلال الشهر الماضي، كم مرة تناولت أدوية للمساعدة على النوم؟ (سواء بوصفة طبية أو أدوية تُباع دون وصفة)',
+      radioList(FREQ, 'q7'));
 
     case 9: return card('صعوبة البقاء مستيقظًا',
       'خلال الشهر الماضي، كم مرة واجهت صعوبة في البقاء مستيقظًا أثناء القيادة أو تناول الوجبات أو المشاركة في نشاط اجتماعي؟',
-      radioOpts([
-        {v:0,l:'أبدًا'},{v:1,l:'مرة أو مرتين'},
-        {v:2,l:'مرة أو مرتين أسبوعيًا'},{v:3,l:'ثلاث مرات أو أكثر أسبوعيًا'},
-      ],'q8'), 9);
+      radioList([
+        {v:0,l:'أبدًا'}, {v:1,l:'مرة أو مرتين'},
+        {v:2,l:'مرة أو مرتين أسبوعيًا'}, {v:3,l:'ثلاث مرات أو أكثر أسبوعيًا'},
+      ], 'q8'));
 
     case 10: return card('الحماس والنشاط',
       'خلال الشهر الماضي، إلى أي درجة شكّل نقص الحماس لإنجاز الأمور مشكلة لديك؟',
-      radioOpts([
-        {v:0,l:'لا توجد مشكلة إطلاقًا'},{v:1,l:'مشكلة بسيطة جدًا'},
-        {v:2,l:'مشكلة إلى حد ما'},{v:3,l:'مشكلة كبيرة جدًا'},
-      ],'q9'), 10);
+      radioList([
+        {v:0,l:'لا توجد مشكلة إطلاقًا'}, {v:1,l:'مشكلة بسيطة جدًا'},
+        {v:2,l:'مشكلة إلى حد ما'}, {v:3,l:'مشكلة كبيرة جدًا'},
+      ], 'q9'));
 
-    case 11: return card('شريك النوم (اختياري)',
-      'إذا كان لديك شريك نوم أو شخص يشاركك الغرفة، اسأله عن المرات التي لاحظ فيها:',
-      `<p class="q-note">(هذا السؤال اختياري ولا يؤثر على حساب الدرجة)</p>` +
-      gridQ('ملاحظات الشريك حول نومك:', [
-        'شخير بصوت مرتفع',
-        'توقفات طويلة في التنفس أثناء النوم',
-        'حركة أو ارتعاش الساقين أثناء النوم',
-        'نوبات من الارتباك أو التشوش أثناء النوم',
-        'نوع آخر من القلق أو عدم الراحة أثناء النوم',
-      ], ['q10a','q10b','q10c','q10d','q10e']), 11);
+    default: return '';
   }
 }
 
-// ═══════════════════════════════════════
-//  SCORING
-// ═══════════════════════════════════════
+function card(title, sub, body) {
+  return `<h2 class="q-title">${title}</h2>
+    ${sub ? `<p class="q-sub">${sub}</p>` : ''}
+    ${body}`;
+}
+
+function radioList(options, key) {
+  return `<div class="radio-list">${options.map(o => {
+    const sel = ans[key] === o.v ? ' selected' : '';
+    return `<div class="radio-card${sel}" onclick="pick('${key}',${o.v},this)">
+      <div class="radio-dot"></div>
+      <span class="radio-label">${o.l}</span>
+    </div>`;
+  }).join('')}</div>`;
+}
+
+function pick(key, val, el) {
+  ans[key] = val;
+  el.closest('.radio-list').querySelectorAll('.radio-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  updateNextBtn();
+}
+
+function gridQ(title, rows) {
+  const headers = ['', 'ليس خلال\nالشهر', 'أقل من\nمرة', 'مرة أو\nمرتين', 'ثلاث مرات\nأو أكثر'];
+  const hCells = headers.map((h,i) => `<th>${h.replace('\n','<br>')}</th>`).join('');
+  const rCells = rows.map(([id, label]) => {
+    const btns = [0,1,2,3].map(v => {
+      const sel = ans[id] === v ? ' sel' : '';
+      return `<td><button class="grid-btn${sel}" onclick="pickGrid('${id}',${v},this)">${v === 0 ? '✕' : v === 1 ? '١' : v === 2 ? '٢' : '٣+'}</button></td>`;
+    }).join('');
+    return `<tr class="grid-row"><td>${label}</td>${btns}</tr>`;
+  }).join('');
+  return `<p class="grid-title">${title}</p>
+    <div style="overflow-x:auto">
+    <table class="grid-table">
+      <thead class="grid-head"><tr>${hCells}</tr></thead>
+      <tbody>${rCells}</tbody>
+    </table></div>`;
+}
+
+function pickGrid(key, val, el) {
+  ans[key] = val;
+  el.closest('tr').querySelectorAll('.grid-btn').forEach(b => b.classList.remove('sel'));
+  el.classList.add('sel');
+  updateNextBtn();
+}
+
+// ─────────────────────────────────────────────
+// Scoring
+// ─────────────────────────────────────────────
 function score() {
   // C1
   const c1 = ans.q6 ?? 0;
 
   // C2
-  const q2 = ans.q2 ?? 0;
-  let q2s = q2<=15?0:q2<=30?1:q2<=60?2:3;
-  const q5as = ans.q5a ?? 0;
-  const c2sum = q2s + q5as;
-  const c2 = c2sum===0?0:c2sum<=2?1:c2sum<=4?2:3;
+  const q2 = ans.q2_sleep_latency ?? 0;
+  let q2s = q2 <= 15 ? 0 : q2 <= 30 ? 1 : q2 <= 60 ? 2 : 3;
+  const c2sum = q2s + (ans.q5a ?? 0);
+  const c2 = c2sum === 0 ? 0 : c2sum <= 2 ? 1 : c2sum <= 4 ? 2 : 3;
 
   // C3
-  const q4 = ans.q4 ?? 0;
-  const c3 = q4>7?0:q4>=6?1:q4>=5?2:3;
+  const h = ans.q4_hours ?? 0;
+  const c3 = h > 7 ? 0 : h >= 6 ? 1 : h >= 5 ? 2 : 3;
 
-  // C4
-  let effPct = 0, c4 = 0;
-  if (ans.q1 && ans.q3 && q4 > 0) {
-    const [bh,bm] = ans.q1.split(':').map(Number);
-    const [wh,wm] = ans.q3.split(':').map(Number);
-    let bed  = new Date(); bed.setHours(bh,bm,0,0);
-    let wake = new Date(); wake.setHours(wh,wm,0,0);
-    if (wake <= bed) wake.setDate(wake.getDate()+1);
+  // C4 efficiency
+  let effPct = 0;
+  if (ans.q1_bedtime && ans.q3_wake_time && h > 0) {
+    const [bH, bM] = ans.q1_bedtime.split(':').map(Number);
+    const [wH, wM] = ans.q3_wake_time.split(':').map(Number);
+    let bed = new Date(); bed.setHours(bH, bM, 0, 0);
+    let wake = new Date(); wake.setHours(wH, wM, 0, 0);
+    if (wake <= bed) wake.setDate(wake.getDate() + 1);
     const tib = (wake - bed) / 3600000;
-    effPct = (q4 / tib) * 100;
-    c4 = effPct>85?0:effPct>=75?1:effPct>=65?2:3;
+    effPct = (h / tib) * 100;
   }
+  const c4 = effPct > 85 ? 0 : effPct >= 75 ? 1 : effPct >= 65 ? 2 : effPct > 0 ? 3 : 0;
 
   // C5
-  const distSum = ['q5b','q5c','q5d','q5e','q5f','q5g','q5h','q5i','q5j']
-    .reduce((s,k)=>s+(ans[k]??0), 0);
-  const c5 = distSum===0?0:distSum<=9?1:distSum<=18?2:3;
+  const c5sum = [ans.q5b,ans.q5c,ans.q5d,ans.q5e,ans.q5f,ans.q5g,ans.q5h,ans.q5i,ans.q5j].reduce((a,v)=>a+(v??0),0);
+  const c5 = c5sum === 0 ? 0 : c5sum <= 9 ? 1 : c5sum <= 18 ? 2 : 3;
 
   // C6
   const c6 = ans.q7 ?? 0;
 
   // C7
-  const c7sum = (ans.q8??0) + (ans.q9??0);
-  const c7 = c7sum===0?0:c7sum<=2?1:c7sum<=4?2:3;
+  const c7sum = (ans.q8 ?? 0) + (ans.q9 ?? 0);
+  const c7 = c7sum === 0 ? 0 : c7sum <= 2 ? 1 : c7sum <= 4 ? 2 : 3;
 
-  return { global: c1+c2+c3+c4+c5+c6+c7, c1,c2,c3,c4,c5,c6,c7, effPct };
+  const global = c1+c2+c3+c4+c5+c6+c7;
+  return { global, c1, c2, c3, c4, c5, c6, c7, effPct };
 }
 
-// ═══════════════════════════════════════
-//  RESULTS RENDER
-// ═══════════════════════════════════════
+// ─────────────────────────────────────────────
+// Results
+// ─────────────────────────────────────────────
 function showResults() {
   const r = score();
-  const good = r.global <= 5;
+  const pct = Math.min(100, Math.round(r.effPct));
 
-  const comps = [
-    { l:'جودة النوم الذاتية',        s:r.c1 },
-    { l:'مدة الاستغراق حتى النوم',   s:r.c2 },
-    { l:'مدة النوم',                  s:r.c3 },
-    { l:'كفاءة النوم المعتادة',      s:r.c4, ex: r.effPct>0?`كفاءة النوم: ${Math.round(r.effPct)}%`:null },
-    { l:'اضطرابات النوم',             s:r.c5 },
-    { l:'استخدام أدوية النوم',        s:r.c6 },
-    { l:'اضطرابات الأداء النهاري',    s:r.c7 },
+  let quality, qColor, qBg, chipBg;
+  if (r.global <= 5) {
+    quality = 'جودة نوم جيدة'; qColor = '#34d399'; qBg = 'rgba(52,211,153,0.1)'; chipBg = 'rgba(52,211,153,0.2)';
+  } else if (r.global <= 10) {
+    quality = 'جودة نوم متوسطة'; qColor = '#fbbf24'; qBg = 'rgba(251,191,36,0.1)'; chipBg = 'rgba(251,191,36,0.2)';
+  } else {
+    quality = 'جودة نوم ضعيفة'; qColor = '#f87171'; qBg = 'rgba(248,113,113,0.1)'; chipBg = 'rgba(248,113,113,0.2)';
+  }
+
+  const components = [
+    { name: 'جودة النوم الذاتية', score: r.c1 },
+    { name: 'كمون النوم', score: r.c2 },
+    { name: 'مدة النوم', score: r.c3 },
+    { name: 'كفاءة النوم الاعتيادية', score: r.c4 },
+    { name: 'اضطرابات النوم', score: r.c5 },
+    { name: 'استخدام أدوية النوم', score: r.c6 },
+    { name: 'ضعف الأداء النهاري', score: r.c7 },
   ];
 
-  const compCards = comps.map(c => {
-    const bars = [0,1,2,3].map(i => {
-      const lit = i <= c.s;
-      const cls = lit ? `lit-${c.s}` : '';
-      return `<div class="bar-seg ${cls}"></div>`;
-    }).join('');
-    return `<div class="comp-card">
-      <div>
-        <div class="comp-label">${c.l}</div>
-        ${c.ex ? `<div class="comp-extra">${c.ex}</div>` : ''}
+  const compCards = components.map(c => `
+    <div class="comp-card">
+      <div class="comp-name">${c.name}</div>
+      <div class="comp-score-row">
+        <span class="comp-score">${c.score}</span>
+        <div class="comp-bar-bg"><div class="comp-bar-fill" style="width:${(c.score/3)*100}%"></div></div>
+        <span style="font-size:0.8rem;color:var(--muted);">/3</span>
       </div>
-      <div class="comp-score-wrap">
-        <div class="comp-score">${c.s}</div>
-        <div class="score-bar">${bars}</div>
-      </div>
-    </div>`;
-  }).join('');
-
-  const interp = good
-    ? `<div class="interp-badge badge-good">
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-        جودة نوم جيدة
-       </div>`
-    : `<div class="interp-badge badge-poor">
-        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
-        يوجد اضطراب في جودة النوم
-       </div>`;
-
-  const note = good
-    ? `<strong>درجتك تشير إلى جودة نوم جيدة بشكل عام.</strong> استمر في الحفاظ على عادات نوم صحية.`
-    : `<strong>درجتك تشير إلى وجود ضعف في جودة النوم.</strong> يُنصح باستشارة طبيب أو متخصص في طب النوم إذا استمرت هذه الأعراض.`;
+    </div>`).join('');
 
   document.getElementById('results-inner').innerHTML = `
-    <div class="res-header">
-      <h1 class="res-title">نتائج مقياس جودة النوم</h1>
-      <div class="score-circle-wrap">
-        <div class="score-glow"></div>
-        <div class="score-circle">
-          <div class="score-num">${r.global}</div>
-          <div class="score-denom">من ٢١</div>
-        </div>
+    <h1 class="results-title">نتائج تقييم جودة النوم</h1>
+    <p class="results-sub">مؤشر بيتسبرغ لجودة النوم (PSQI) — الشهر الماضي</p>
+
+    <div class="score-circle-wrap">
+      <div class="score-circle">
+        <span class="score-num">${r.global}</span>
+        <span class="score-max">من 21</span>
+        <span class="score-label-chip" style="background:${chipBg};color:${qColor}">${quality}</span>
       </div>
-      ${interp}
     </div>
 
-    <div class="components-grid">${compCards}</div>
+    <div class="interp-card" style="background:${qBg};border-color:${qColor};color:${qColor}">
+      ${r.global <= 5
+        ? '✅ درجتك تشير إلى جودة نوم جيدة. استمر في الحفاظ على عاداتك الصحية.'
+        : r.global <= 10
+        ? '⚠️ درجتك تشير إلى بعض اضطرابات النوم. قد يفيدك تحسين بعض عادات النوم.'
+        : '❗ درجتك تشير إلى اضطرابات نوم ملحوظة. يُنصح باستشارة متخصص.'}
+    </div>
 
-    <div class="res-note">${note}</div>
+    <div class="comp-grid">${compCards}</div>
 
-    <button class="btn-restart" onclick="restartQuiz()">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.5"/></svg>
-      أعد الاختبار
-    </button>
+    ${r.effPct > 0 ? `
+    <div class="efficiency-card">
+      <div class="eff-pct">${pct}%</div>
+      <div>
+        <div style="font-weight:700;margin-bottom:0.2rem;">كفاءة النوم</div>
+        <div class="eff-label">نسبة وقت النوم الفعلي إلى الوقت الكلي في السرير<br/>
+          ${pct >= 85 ? '✅ كفاءة ممتازة' : pct >= 75 ? '⚠️ كفاءة مقبولة' : '❗ كفاءة منخفضة'}</div>
+      </div>
+    </div>` : ''}
+
+    <button class="btn-primary btn-restart" onclick="restart()">إعادة الاستبيان</button>
   `;
-  showScreen('results');
+
+  show('screen-results');
+  window.scrollTo(0, 0);
 }
 
-function restartQuiz() {
-  Object.keys(ans).forEach(k => ans[k] = k==='q1'||k==='q3'?'':null);
-  step = 1; goingForward = true;
-  startQuiz();
+function restart() {
+  Object.keys(ans).forEach(k => ans[k] = typeof ans[k] === 'string' ? '' : null);
+  step = 1;
+  goingBack = false;
+  show('screen-quiz');
+  render();
 }
 </script>
 </body>
